@@ -21,7 +21,7 @@ The six lenses are not interchangeable adjectives. They are scaffolds for differ
 - **Cultural Lens** reads how the design constructs and positions social categories. It attends to language and script choice, caste markers and their visual encoding, class signifiers conveyed through material and composition, gender performance and the gaze it constructs, sexuality as expressed or suppressed in visual language, race as represented or absented, disability access or its denial, regional and diasporic identity, institutional authority, and patterns of inclusion and exclusion. It analyses what the work assumes about its audience and who it renders invisible.
 - **Critical Questions** turns the lens outward: the model generates provocative questions that push past description into argument, exposing tensions, contradictions, or unspoken assumptions across form, material, sign, structure, body, and power.
 
-Each lens runs as an independent parallel request. The user selects which lenses to activate. Results appear as cards with loading, done, and error states. Every card carries an inference warning when the lens type is inherently speculative (production, culture). The language model is instructed to write in British English, avoid generic praise, marketing language, moral theatre, and inflated certainty.
+Each lens runs as an independent request. The user selects one lens at a time via radio selection. Results appear as a single card with loading, done, and error states. Every card carries an inference warning when the lens type is inherently speculative (production, culture). The language model is instructed to write in British English, avoid generic praise, marketing language, moral theatre, and inflated certainty.
 
 ---
 
@@ -64,7 +64,7 @@ The mode is validated server-side against an allowlist of `standard` and `expert
                                                                    { result } --> [Browser]
 ```
 
-Every lens runs as an independent `Promise.allSettled` call from the client. An `AbortController` cancels in-flight requests on unmount, clear, or re-run. The server does not propagate abort to the upstream model call (the Gemini-era limitation persists; noted as a future improvement).
+Each lens runs as a single `fetch` call from the client. An `AbortController` cancels in-flight requests on unmount, clear, or re-run. The server does not propagate abort to the upstream model call (noted as a future improvement).
 
 ### File layout
 
@@ -78,7 +78,7 @@ Every lens runs as an independent `Promise.allSettled` call from the client. An 
 │   └── lib/
 │       ├── analysisMethods.js   # Lens definitions (key, name, inferential flag)
 │       ├── imageCompression.js  # Canvas-based JPEG compression (1920px, 0.85 quality)
-│       └── markdownExport.js    # Per-lens and full-session .md download triggers
+│       └── markdownExport.js    # Per-lens .md download trigger
 ├── docs/
 │   └── opencode-tasks.md   # Task roadmap
 ├── .env.example            # Template for required environment variables
@@ -126,10 +126,7 @@ The original file is preserved as a `blob:` URL for the preview panel. The compr
 
 ## Markdown export
 
-Two export paths, both triggered from the browser:
-
-- **Per-lens**: Each result card has an "Export .md" button. Produces a file named `design-decode-{lens-name}.md` containing the lens name, image name, sanitised context, inference note if applicable, and the full analysis text.
-- **Full session**: A toolbar button above the results section exports all completed lenses as a single `design-decode-session.md` file with a date header, image name, context, and each lens separated by horizontal rules.
+Each result card has an "Export .md" button. Produces a file named `design-decode-{lens-name}.md` containing the lens name, image name, sanitised context, inference note if applicable, and the full analysis text.
 
 Context is sanitised in the export to match what the model actually received (stripped angle brackets, trimmed, 1200-char cap). Downloads use Blob + `URL.createObjectURL` with immediate cleanup after the filename click triggers.
 
@@ -217,7 +214,7 @@ Completed tasks from `docs/opencode-tasks.md`:
 1. Local dev verification
 2. Security hardening audit (seven fixes applied)
 3. Client-side image compression (JPEG, 1920px, quality 0.85)
-4. Markdown export (per-lens and full-session)
+4. Markdown export (per-lens)
 5. Pedagogy mode (standard / teacher / student)
 
 ---
