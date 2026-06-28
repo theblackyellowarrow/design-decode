@@ -6,8 +6,17 @@ import { exportSingleLens, exportFullSession } from './lib/markdownExport.js';
 import './styles.css';
 
 function ResultText({ text }) {
-  return <pre className="result-text">{text}</pre>;
+  return <div className="result-text">{text}</div>;
 }
+
+const lensBadge = {
+  visual_formal_composition: 'vf',
+  interaction_ux_behaviour: 'ux',
+  semiotic_messaging_layer: 'sem',
+  production_logic: 'prod',
+  cultural_political_meaning: 'cult',
+  suggest_critical_questions: 'crit'
+};
 
 function App() {
   const [image, setImage] = useState(null);
@@ -192,11 +201,14 @@ function App() {
           const state = status[key];
           const text = results[key];
           return (
-            <article className="result-card" key={key}>
+            <article className="result-card" key={key} data-lens={key}>
               <div className="result-head">
                 <h2>{method?.name || key}</h2>
-                {state === 'loading' ? <span className="spinner">analysing</span> : null}
-                {state === 'error' ? <span className="failed">failed</span> : null}
+                <div className="result-head-right">
+                  {state === 'loading' ? <span className="spinner">analysing</span> : null}
+                  {state === 'error' ? <span className="failed">failed</span> : null}
+                  <span className={`lens-badge ${lensBadge[key] || ''}`}>{method?.name || key}</span>
+                </div>
               </div>
               {method?.inferential ? <p className="note">This lens can exceed visible evidence. Treat unsupported claims as inference.</p> : null}
               {text ? <ResultText text={text} /> : <p className="empty">Run the decode to generate this reading.</p>}
