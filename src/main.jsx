@@ -126,32 +126,22 @@ function App() {
 
   return (
     <main className="shell">
-      <header className="hero">
-        <p className="eyebrow">critical image reading prototype</p>
-        <h1>Design Decode</h1>
-        <p>Upload a design image. Read it through formal, experiential, semiotic, production, and cultural lenses.</p>
-      </header>
-
-      <section className="panel grid">
-        <div className="controls">
-
-          <div className="mode-selector" aria-label="Pedagogy mode">
-            <span>Mode, optional</span>
-            <div className="mode-options">
-              {['standard', 'expert'].map((m) => (
-                <button
-                  type="button"
-                  key={m}
-                  className={mode === m ? 'mode-btn selected' : 'mode-btn'}
-                  onClick={() => setMode(m)}
-                >
-                  {m}
-                </button>
-              ))}
-            </div>
+      <header className="topbar">
+        <h1 className="logo">Design Decode</h1>
+        <div className="topbar-controls">
+          <div className="mode-options">
+            {['standard', 'expert'].map((m) => (
+              <button
+                type="button"
+                key={m}
+                className={mode === m ? 'mode-btn selected' : 'mode-btn'}
+                onClick={() => setMode(m)}
+              >
+                {m}
+              </button>
+            ))}
           </div>
-
-          <div className="method-grid" aria-label="Decode lenses">
+          <div className="method-row">
             {analysisMethods.map((method) => (
               <button
                 type="button"
@@ -160,61 +150,62 @@ function App() {
                 onClick={() => toggleMethod(method.key)}
               >
                 {method.name}
-                {method.inferential ? <small> inference-heavy</small> : null}
+                {method.inferential ? <small> inf.</small> : null}
               </button>
             ))}
           </div>
-
-          {error ? <p className="error">{error}</p> : null}
-
           <div className="actions">
-            <button type="button" className="primary" onClick={runAnalysis}>Run selected decode</button>
+            <button type="button" className="primary" onClick={runAnalysis}>Run</button>
             <button type="button" className="secondary" onClick={clearAll}>Clear</button>
             <button type="button" className="secondary" onClick={() => abortRef.current?.abort()}>Cancel</button>
           </div>
         </div>
+      </header>
 
+      {error ? <p className="error">{error}</p> : null}
+
+      <section className="workspace">
         <div className={image ? 'preview' : 'preview preview-empty'} onClick={() => !image && fileInputRef.current?.click()}>
           <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFile} className="preview-input" />
-          {image ? <img src={image.preview} alt={`Uploaded design: ${image.name}`} /> : <div className="placeholder">Upload an image to begin.</div>}
+          {image ? <img src={image.preview} alt={`Uploaded design: ${image.name}`} /> : <div className="placeholder">Drop image or click</div>}
         </div>
-      </section>
 
-      <section className="results">
-        {Object.values(status).some((s) => s === 'done') ? (
-          <div className="results-toolbar">
-            <button type="button" className="secondary" onClick={() => exportFullSession({
-              results, methods: analysisMethods, imageName: image.name, context, selected
-            })}>Export session .md</button>
-          </div>
-        ) : null}
-        {selected.map((key) => {
-          const method = analysisMethods.find((item) => item.key === key);
-          const state = status[key];
-          const text = results[key];
-          return (
-            <article className="result-card" key={key} data-lens={key}>
-              <div className="result-head">
-                <h2>{method?.name || key}</h2>
-                <div className="result-head-right">
-                  {state === 'loading' ? <span className="spinner">analysing</span> : null}
-                  {state === 'error' ? <span className="failed">failed</span> : null}
-                  <span className={`lens-badge ${lensBadge[key] || ''}`}>{method?.name || key}</span>
+        <section className="results">
+          {Object.values(status).some((s) => s === 'done') ? (
+            <div className="results-toolbar">
+              <button type="button" className="secondary" onClick={() => exportFullSession({
+                results, methods: analysisMethods, imageName: image?.name, context, selected
+              })}>Export session .md</button>
+            </div>
+          ) : null}
+          {selected.map((key) => {
+            const method = analysisMethods.find((item) => item.key === key);
+            const state = status[key];
+            const text = results[key];
+            return (
+              <article className="result-card" key={key} data-lens={key}>
+                <div className="result-head">
+                  <h2>{method?.name || key}</h2>
+                  <div className="result-head-right">
+                    {state === 'loading' ? <span className="spinner">analysing</span> : null}
+                    {state === 'error' ? <span className="failed">failed</span> : null}
+                    <span className={`lens-badge ${lensBadge[key] || ''}`}>{method?.name || key}</span>
+                  </div>
                 </div>
-              </div>
-              {method?.inferential ? <p className="note">This lens can exceed visible evidence. Treat unsupported claims as inference.</p> : null}
-              {text ? <ResultText text={text} /> : <p className="empty">Run the decode to generate this reading.</p>}
-              {text ? (
-                <div className="result-actions">
-                  <button type="button" className="copy" onClick={() => copyText(text)}>Copy text</button>
-                  <button type="button" className="copy" onClick={() => exportSingleLens({
-                    methodName: method?.name || key, text, imageName: image.name, context, inferential: method?.inferential
-                  })}>Export .md</button>
-                </div>
-              ) : null}
-            </article>
-          );
-        })}
+                {method?.inferential ? <p className="note">This lens can exceed visible evidence. Treat unsupported claims as inference.</p> : null}
+                {text ? <ResultText text={text} /> : <p className="empty">Run the decode to generate this reading.</p>}
+                {text ? (
+                  <div className="result-actions">
+                    <button type="button" className="copy" onClick={() => copyText(text)}>Copy text</button>
+                    <button type="button" className="copy" onClick={() => exportSingleLens({
+                      methodName: method?.name || key, text, imageName: image?.name, context, inferential: method?.inferential
+                    })}>Export .md</button>
+                  </div>
+                ) : null}
+              </article>
+            );
+          })}
+        </section>
       </section>
     </main>
   );
