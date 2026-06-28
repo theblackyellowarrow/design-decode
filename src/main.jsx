@@ -138,7 +138,7 @@ function App() {
           <div className="mode-selector" aria-label="Pedagogy mode">
             <span>Mode, optional</span>
             <div className="mode-options">
-              {['standard', 'teacher', 'student'].map((m) => (
+              {['standard', 'expert'].map((m) => (
                 <button
                   type="button"
                   key={m}

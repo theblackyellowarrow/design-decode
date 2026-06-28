@@ -27,13 +27,12 @@ Each lens runs as an independent parallel request. The user selects which lenses
 
 ## Pedagogy mode
 
-The tool includes an optional three-position mode toggle that alters the persona and output structure of the model without changing the lenses themselves:
+The tool includes a two-position mode toggle that alters the persona, voice, and output structure of the model without changing the lenses themselves:
 
-- **Standard** — the default critical-analyst voice. Compact, evidence-grounded, 220-word paragraph.
-- **Teacher** — the model adopts the voice of a senior design educator preparing classroom material. Output extends to 280 words and concludes with two discussion questions suitable for group critique. The `Critical Questions` lens generates four discussion prompts instead of three.
-- **Student** — the model speaks as a design mentor guiding a learner. Language is more accessible, output caps at 240 words, and each lens closes with one reflective prompt inviting the student to extend the analysis themselves. The `Critical Questions` lens generates three guided questions in simpler language.
+- **Standard** — the default voice. The model adopts the persona of a 21-year-old Indian design student studying at an elite UK university. Sharp, perceptive, direct, sometimes wry. Describes what is visible in plain precise language, interprets what the work is actually doing, and offers a read on whether it works. Wears knowledge of design principles, Gestalt, UX, semiotics, sustainability, and design history lightly — never sounds like a textbook. Output under 200 words in a natural student register. The `Critical Questions` lens generates three curious, precise questions.
+- **Expert** — the model adopts the voice of a senior design educator in their late 40s, trained in India and the UK, with interdisciplinary command of elements and principles of design, Gestalt theory, global visual traditions, UX architecture, materiality, sustainability, semiotics, design history, and critical theory. Forensic eye for detail. Names design traditions and historical precedents with precision. Output under 300 words, concludes with two discussion questions for group critique. The `Critical Questions` lens generates four argumentative seminar questions.
 
-The mode is validated server-side against an allowlist. Unknown modes fall back silently to standard. The mode does not alter the lens prompts themselves — only the framing, tone, word budget, and closure pattern.
+The mode is validated server-side against an allowlist of `standard` and `expert`. Unknown modes fall back silently to standard.
 
 ---
 
