@@ -16,10 +16,10 @@ body { margin: 0; background: #0a0a0a; }
 button, input, textarea { font: inherit; }
 
 .shell { max-width: 1180px; margin: 0 auto; padding: 40px 24px 80px; }
-.hero { margin-bottom: 32px; }
-.eyebrow { color: #7dd3fc; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.72rem; font-weight: 600; }
-h1 { font-size: clamp(2.8rem, 7vw, 5.5rem); line-height: 0.9; margin: 0 0 14px; color: #fff; letter-spacing: -0.02em; }
-.hero p:last-child { max-width: 680px; color: #9ca3af; font-size: 1.05rem; line-height: 1.55; }
+.hero { margin-bottom: 28px; }
+.eyebrow { color: #7dd3fc; font-size: 0.72rem; font-weight: 600; }
+h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); line-height: 1.1; margin: 0 0 8px; color: #fff; letter-spacing: -0.02em; font-weight: 700; }
+.hero p:last-child { color: #9ca3af; font-size: 0.92rem; line-height: 1.5; }
 
 .panel { border: 1px solid #1f2937; background: #0f0f0f; border-radius: 20px; padding: 24px; }
 .grid { display: grid; grid-template-columns: minmax(260px, 400px) 1fr; gap: 28px; }

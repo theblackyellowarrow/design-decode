@@ -127,9 +127,9 @@ function App() {
   return (
     <main className="shell">
       <header className="hero">
-        <p className="eyebrow">critical image reading prototype</p>
+        <p className="eyebrow">dotai presents</p>
         <h1>Design Decode</h1>
-        <p>Upload a design image. Read it through formal, experiential, semiotic, production, and cultural lenses.</p>
+        <p>Image analysis tool for designers</p>
       </header>
 
       <section className="panel grid">
