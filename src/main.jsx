@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { analysisMethods } from './lib/analysisMethods.js';
 import { compressImage } from './lib/imageCompression.js';
-import { exportSingleLens, exportFullSession } from './lib/markdownExport.js';
+import { exportSingleLens } from './lib/markdownExport.js';
 import './styles.css';
 
 function ResultText({ text }) {
@@ -22,7 +22,7 @@ function App() {
   const [image, setImage] = useState(null);
   const [context, setContext] = useState('');
   const [mode, setMode] = useState('standard');
-  const [selected, setSelected] = useState(['visual_formal_composition']);
+  const [selected, setSelected] = useState('visual_formal_composition');
   const [results, setResults] = useState({});
   const [status, setStatus] = useState({});
   const [error, setError] = useState('');
@@ -65,8 +65,8 @@ function App() {
     setStatus({});
   }
 
-  function toggleMethod(key) {
-    setSelected((current) => current.includes(key) ? current.filter((item) => item !== key) : [...current, key]);
+  function selectMethod(key) {
+    setSelected(key);
   }
 
   function clearAll() {
@@ -81,15 +81,12 @@ function App() {
     setStatus({});
     setError('');
     if (fileInputRef.current) fileInputRef.current.value = '';
+    setSelected('visual_formal_composition');
   }
 
   async function runAnalysis() {
     if (!image) {
       setError('Upload an image before running a decode.');
-      return;
-    }
-    if (!selected.length) {
-      setError('Select at least one decode lens.');
       return;
     }
 
@@ -98,26 +95,24 @@ function App() {
     abortRef.current = controller;
     setError('');
     setResults({});
-    setStatus(Object.fromEntries(selected.map((key) => [key, 'loading'])));
+    setStatus({ [selected]: 'loading' });
 
-    await Promise.allSettled(selected.map(async (methodKey) => {
-      try {
-        const response = await fetch('/api/analyse', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          signal: controller.signal,
-          body: JSON.stringify({ methodKey, imageBase64: image.base64, mimeType: image.mimeType, context, mode })
-        });
-        const payload = await response.json().catch(() => ({}));
-        if (!response.ok) throw new Error(payload.error || `Request failed with HTTP ${response.status}`);
-        setResults((current) => ({ ...current, [methodKey]: payload.result }));
-        setStatus((current) => ({ ...current, [methodKey]: 'done' }));
-      } catch (err) {
-        if (err.name === 'AbortError') return;
-        setResults((current) => ({ ...current, [methodKey]: err.message || 'Analysis failed.' }));
-        setStatus((current) => ({ ...current, [methodKey]: 'error' }));
-      }
-    }));
+    try {
+      const response = await fetch('/api/analyse', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
+        body: JSON.stringify({ methodKey: selected, imageBase64: image.base64, mimeType: image.mimeType, context, mode })
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || `Request failed with HTTP ${response.status}`);
+      setResults({ [selected]: payload.result });
+      setStatus({ [selected]: 'done' });
+    } catch (err) {
+      if (err.name === 'AbortError') return;
+      setResults({ [selected]: err.message || 'Analysis failed.' });
+      setStatus({ [selected]: 'error' });
+    }
   }
 
   function copyText(text) {
@@ -152,15 +147,21 @@ function App() {
 
           <div className="method-grid" aria-label="Decode lenses">
             {analysisMethods.map((method) => (
-              <button
-                type="button"
+              <label
                 key={method.key}
-                className={selected.includes(method.key) ? 'method selected' : 'method'}
-                onClick={() => toggleMethod(method.key)}
+                className={selected === method.key ? 'method selected' : 'method'}
               >
-                {method.name}
+                <input
+                  type="radio"
+                  name="lens"
+                  value={method.key}
+                  checked={selected === method.key}
+                  onChange={() => selectMethod(method.key)}
+                  className="method-radio"
+                />
+                <span className="method-label">{method.name}</span>
                 {method.inferential ? <small> inference-heavy</small> : null}
-              </button>
+              </label>
             ))}
           </div>
 
@@ -180,14 +181,8 @@ function App() {
       </section>
 
       <section className="results">
-        {Object.values(status).some((s) => s === 'done') ? (
-          <div className="results-toolbar">
-            <button type="button" className="secondary" onClick={() => exportFullSession({
-              results, methods: analysisMethods, imageName: image?.name, context, selected
-            })}>Export session .md</button>
-          </div>
-        ) : null}
-        {selected.map((key) => {
+        {(() => {
+          const key = selected;
           const method = analysisMethods.find((item) => item.key === key);
           const state = status[key];
           const text = results[key];
@@ -213,7 +208,7 @@ function App() {
               ) : null}
             </article>
           );
-        })}
+        })()}
       </section>
     </main>
   );
