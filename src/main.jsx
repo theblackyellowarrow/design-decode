@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { analysisMethods } from './lib/analysisMethods.js';
 import { compressImage } from './lib/imageCompression.js';
+import { exportSingleLens, exportFullSession } from './lib/markdownExport.js';
 import './styles.css';
 
 function ResultText({ text }) {
@@ -11,6 +12,7 @@ function ResultText({ text }) {
 function App() {
   const [image, setImage] = useState(null);
   const [context, setContext] = useState('');
+  const [mode, setMode] = useState('standard');
   const [selected, setSelected] = useState(['visual_formal_composition']);
   const [results, setResults] = useState({});
   const [status, setStatus] = useState({});
@@ -95,7 +97,7 @@ function App() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           signal: controller.signal,
-          body: JSON.stringify({ methodKey, imageBase64: image.base64, mimeType: image.mimeType, context })
+          body: JSON.stringify({ methodKey, imageBase64: image.base64, mimeType: image.mimeType, context, mode })
         });
         const payload = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(payload.error || `Request failed with HTTP ${response.status}`);
@@ -133,6 +135,22 @@ function App() {
             <textarea value={context} onChange={(event) => setContext(event.target.value)} maxLength="1200" placeholder="Brief, audience, medium, site, assignment, or intended use." />
           </label>
 
+          <div className="mode-selector" aria-label="Pedagogy mode">
+            <span>Mode, optional</span>
+            <div className="mode-options">
+              {['standard', 'teacher', 'student'].map((m) => (
+                <button
+                  type="button"
+                  key={m}
+                  className={mode === m ? 'mode-btn selected' : 'mode-btn'}
+                  onClick={() => setMode(m)}
+                >
+                  {m}
+                </button>
+              ))}
+            </div>
+          </div>
+
           <div className="method-grid" aria-label="Decode lenses">
             {analysisMethods.map((method) => (
               <button
@@ -162,6 +180,13 @@ function App() {
       </section>
 
       <section className="results">
+        {Object.values(status).some((s) => s === 'done') ? (
+          <div className="results-toolbar">
+            <button type="button" className="secondary" onClick={() => exportFullSession({
+              results, methods: analysisMethods, imageName: image.name, context, selected
+            })}>Export session .md</button>
+          </div>
+        ) : null}
         {selected.map((key) => {
           const method = analysisMethods.find((item) => item.key === key);
           const state = status[key];
@@ -175,7 +200,14 @@ function App() {
               </div>
               {method?.inferential ? <p className="note">This lens can exceed visible evidence. Treat unsupported claims as inference.</p> : null}
               {text ? <ResultText text={text} /> : <p className="empty">Run the decode to generate this reading.</p>}
-              {text ? <button type="button" className="copy" onClick={() => copyText(text)}>Copy text</button> : null}
+              {text ? (
+                <div className="result-actions">
+                  <button type="button" className="copy" onClick={() => copyText(text)}>Copy text</button>
+                  <button type="button" className="copy" onClick={() => exportSingleLens({
+                    methodName: method?.name || key, text, imageName: image.name, context, inferential: method?.inferential
+                  })}>Export .md</button>
+                </div>
+              ) : null}
             </article>
           );
         })}
