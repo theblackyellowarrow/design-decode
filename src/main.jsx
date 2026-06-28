@@ -134,15 +134,6 @@ function App() {
 
       <section className="panel grid">
         <div className="controls">
-          <label className="field">
-            <span>Upload design work</span>
-            <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFile} />
-          </label>
-
-          <label className="field">
-            <span>Context, optional</span>
-            <textarea value={context} onChange={(event) => setContext(event.target.value)} maxLength="1200" placeholder="Brief, audience, medium, site, assignment, or intended use." />
-          </label>
 
           <div className="mode-selector" aria-label="Pedagogy mode">
             <span>Mode, optional</span>
@@ -183,7 +174,8 @@ function App() {
           </div>
         </div>
 
-        <div className="preview">
+        <div className={image ? 'preview' : 'preview preview-empty'} onClick={() => !image && fileInputRef.current?.click()}>
+          <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFile} className="preview-input" />
           {image ? <img src={image.preview} alt={`Uploaded design: ${image.name}`} /> : <div className="placeholder">Upload an image to begin.</div>}
         </div>
       </section>
