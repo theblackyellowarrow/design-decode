@@ -14,8 +14,7 @@ const lensBadge = {
   interaction_ux_behaviour: 'ux',
   semiotic_messaging_layer: 'sem',
   production_logic: 'prod',
-  cultural_political_meaning: 'cult',
-  suggest_critical_questions: 'crit'
+  cultural_political_meaning: 'cult'
 };
 
 function App() {
@@ -25,6 +24,8 @@ function App() {
   const [selected, setSelected] = useState('visual_formal_composition');
   const [results, setResults] = useState({});
   const [status, setStatus] = useState({});
+  const [questions, setQuestions] = useState({});
+  const [questionsLoading, setQuestionsLoading] = useState({});
   const [error, setError] = useState('');
   const abortRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -79,6 +80,8 @@ function App() {
     setContext('');
     setResults({});
     setStatus({});
+    setQuestions({});
+    setQuestionsLoading({});
     setError('');
     if (fileInputRef.current) fileInputRef.current.value = '';
     setSelected('visual_formal_composition');
@@ -113,6 +116,23 @@ function App() {
       setResults({ [selected]: err.message || 'Analysis failed.' });
       setStatus({ [selected]: 'error' });
     }
+  }
+
+  async function fetchCriticalQuestions() {
+    setQuestionsLoading({ [selected]: true });
+    try {
+      const response = await fetch('/api/analyse', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ methodKey: 'suggest_critical_questions', imageBase64: image.base64, mimeType: image.mimeType, context, mode })
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || 'Failed to load questions.');
+      setQuestions({ [selected]: payload.result });
+    } catch {
+      setQuestions({ [selected]: 'Could not generate questions.' });
+    }
+    setQuestionsLoading({ [selected]: false });
   }
 
   function copyText(text) {
@@ -204,6 +224,25 @@ function App() {
                   <button type="button" className="copy" onClick={() => exportSingleLens({
                     methodName: method?.name || key, text, imageName: image?.name, context, inferential: method?.inferential
                   })}>Export .md</button>
+                </div>
+              ) : null}
+              {state === 'done' && text ? (
+                <div className="questions-section">
+                  {!questions[key] && !questionsLoading[key] ? (
+                    <div className="questions-prompt">
+                      <span>Want to explore critical questions for this lens?</span>
+                      <button type="button" className="copy" onClick={fetchCriticalQuestions}>Ask</button>
+                    </div>
+                  ) : null}
+                  {questionsLoading[key] ? (
+                    <div className="questions-loading"><span className="spinner">generating questions</span></div>
+                  ) : null}
+                  {questions[key] ? (
+                    <div className="questions-result">
+                      <p className="questions-label">Critical Questions</p>
+                      <div className="result-text">{questions[key]}</div>
+                    </div>
+                  ) : null}
                 </div>
               ) : null}
             </article>

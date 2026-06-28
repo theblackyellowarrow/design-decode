@@ -8,7 +8,6 @@
   --sem: #a78bfa;
   --prod: #f59e0b;
   --cult: #f43f5e;
-  --crit: #6366f1;
 }
 
 * { box-sizing: border-box; }
@@ -67,7 +66,6 @@ button:focus-visible, input:focus-visible { outline: 3px solid #facc15; outline-
 .result-card[data-lens="semiotic_messaging_layer"] { border-left-color: var(--sem); }
 .result-card[data-lens="production_logic"] { border-left-color: var(--prod); }
 .result-card[data-lens="cultural_political_meaning"] { border-left-color: var(--cult); }
-.result-card[data-lens="suggest_critical_questions"] { border-left-color: var(--crit); }
 
 .result-head { display: flex; justify-content: space-between; gap: 14px; align-items: center; margin-bottom: 8px; }
 .result-head h2 { margin: 0; font-size: 1.1rem; font-weight: 700; color: #f1f5f9; }
@@ -78,7 +76,6 @@ button:focus-visible, input:focus-visible { outline: 3px solid #facc15; outline-
 .lens-badge.sem { color: var(--sem); background: rgb(167 139 250 / 10%); }
 .lens-badge.prod { color: var(--prod); background: rgb(245 158 11 / 10%); }
 .lens-badge.cult { color: var(--cult); background: rgb(244 63 94 / 10%); }
-.lens-badge.crit { color: var(--crit); background: rgb(99 102 241 / 10%); }
 
 .note { color: #fde68a; font-size: 0.8rem; margin: 0 0 14px; line-height: 1.45; padding: 8px 12px; background: rgb(253 230 138 / 6%); border-radius: 8px; border: 1px solid rgb(253 230 138 / 10%); }
 .empty { color: #6b7280; font-size: 0.95rem; padding: 8px 0; }
@@ -99,6 +96,15 @@ button:focus-visible, input:focus-visible { outline: 3px solid #facc15; outline-
 
 .spinner { color: #facc15; font-size: 0.82rem; }
 .failed { color: #fecaca; font-size: 0.82rem; }
+
+.questions-section { margin-top: 16px; padding-top: 14px; border-top: 1px solid #1f2937; }
+.questions-prompt { display: flex; align-items: center; gap: 10px; }
+.questions-prompt span { color: #9ca3af; font-size: 0.85rem; }
+.questions-prompt button { font-size: 0.8rem; background: #1a1a1a; color: #a5f3fc; border: 1px solid #06b6d4; border-radius: 8px; padding: 6px 16px; cursor: pointer; font-weight: 600; }
+.questions-prompt button:hover { background: #06b6d4; color: #041014; }
+.questions-loading { padding: 8px 0; }
+.questions-result { margin-top: 10px; }
+.questions-label { color: #a5f3fc; font-size: 0.78rem; font-weight: 700; margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.06em; }
 
 @media (max-width: 820px) {
   .shell { padding: 24px 16px 60px; }
