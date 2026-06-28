@@ -93,9 +93,9 @@ function decodeImageSize(base64) {
   return Math.ceil((base64.length * 3) / 4);
 }
 
-async function callOpenAI({ methodKey, imageBase64, mimeType, context, mode }) {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
+async function callOpenAI({ methodKey, imageBase64, mimeType, context, mode, apiKey }) {
+  const key = apiKey || process.env.OPENAI_API_KEY;
+  if (!key) {
     const err = new Error('Missing OPENAI_API_KEY.');
     err.status = 500;
     throw err;
@@ -120,7 +120,7 @@ async function callOpenAI({ methodKey, imageBase64, mimeType, context, mode }) {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${apiKey}`
+      'Authorization': `Bearer ${key}`
     },
     body: JSON.stringify(payload)
   });
@@ -156,7 +156,7 @@ export default async function handler(req, res) {
 
   try {
     const body = await readJson(req);
-    const { methodKey, imageBase64, mimeType = 'image/jpeg', context = '', mode = 'standard' } = body;
+    const { methodKey, imageBase64, mimeType = 'image/jpeg', context = '', mode = 'standard', apiKey } = body;
 
     if (!methodKey || !imageBase64) {
       res.statusCode = 422;
@@ -184,7 +184,7 @@ export default async function handler(req, res) {
       return;
     }
 
-    const result = await callOpenAI({ methodKey, imageBase64, mimeType, context, mode: safeMode });
+    const result = await callOpenAI({ methodKey, imageBase64, mimeType, context, mode: safeMode, apiKey });
     res.statusCode = 200;
     res.end(JSON.stringify({ result }));
   } catch (error) {

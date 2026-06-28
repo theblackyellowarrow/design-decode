@@ -18,6 +18,7 @@ const lensBadge = {
 };
 
 function App() {
+  const [showLanding, setShowLanding] = useState(true);
   const [image, setImage] = useState(null);
   const [context, setContext] = useState('');
   const [mode, setMode] = useState('standard');
@@ -27,6 +28,10 @@ function App() {
   const [questions, setQuestions] = useState({});
   const [questionsLoading, setQuestionsLoading] = useState({});
   const [error, setError] = useState('');
+  const [usageCount, setUsageCount] = useState(() => Number(localStorage.getItem('dd_usage') || 0));
+  const [userKey, setUserKey] = useState(() => localStorage.getItem('dd_key') || '');
+  const [showKeyPrompt, setShowKeyPrompt] = useState(false);
+  const [keyInput, setKeyInput] = useState('');
   const abortRef = useRef(null);
   const fileInputRef = useRef(null);
   const previewRef = useRef(null);
@@ -92,6 +97,10 @@ function App() {
       setError('Upload an image before running a decode.');
       return;
     }
+    if (!userKey && usageCount >= 5) {
+      setShowKeyPrompt(true);
+      return;
+    }
 
     abortRef.current?.abort();
     const controller = new AbortController();
@@ -105,12 +114,17 @@ function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         signal: controller.signal,
-        body: JSON.stringify({ methodKey: selected, imageBase64: image.base64, mimeType: image.mimeType, context, mode })
+        body: JSON.stringify({ methodKey: selected, imageBase64: image.base64, mimeType: image.mimeType, context, mode, apiKey: userKey || undefined })
       });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(payload.error || `Request failed with HTTP ${response.status}`);
       setResults({ [selected]: payload.result });
       setStatus({ [selected]: 'done' });
+      if (!userKey) {
+        const next = usageCount + 1;
+        setUsageCount(next);
+        localStorage.setItem('dd_usage', String(next));
+      }
     } catch (err) {
       if (err.name === 'AbortError') return;
       setResults({ [selected]: err.message || 'Analysis failed.' });
@@ -119,12 +133,16 @@ function App() {
   }
 
   async function fetchCriticalQuestions() {
+    if (!userKey && usageCount >= 5) {
+      setShowKeyPrompt(true);
+      return;
+    }
     setQuestionsLoading({ [selected]: true });
     try {
       const response = await fetch('/api/analyse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ methodKey: 'suggest_critical_questions', imageBase64: image.base64, mimeType: image.mimeType, context, mode })
+        body: JSON.stringify({ methodKey: 'suggest_critical_questions', imageBase64: image.base64, mimeType: image.mimeType, context, mode, apiKey: userKey || undefined })
       });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(payload.error || 'Failed to load questions.');
@@ -135,12 +153,59 @@ function App() {
     setQuestionsLoading({ [selected]: false });
   }
 
+  function saveKey() {
+    const trimmed = keyInput.trim();
+    if (!trimmed) return;
+    localStorage.setItem('dd_key', trimmed);
+    setUserKey(trimmed);
+    setShowKeyPrompt(false);
+    setKeyInput('');
+    setError('');
+  }
+
   function copyText(text) {
     navigator.clipboard?.writeText(text);
   }
 
+  if (showLanding) {
+    return (
+      <main className="landing">
+        <div className="landing-grid" />
+        <div className="landing-content">
+          <p className="landing-eyebrow">dotai presents</p>
+          <h1 className="landing-title">Design Decode</h1>
+          <p className="landing-sub">A critical image analysis tool that reads design through formal, UX, semiotic, production, and cultural lenses.</p>
+          <p className="landing-desc">Upload any design image. Choose a lens. Get a sharp, evidence-grounded reading — not generic praise, not AI slop. Built for designers who think.</p>
+          <p className="landing-meta">5 free analyses • then bring your own OpenAI key</p>
+          <button type="button" className="landing-cta" onClick={() => setShowLanding(false)}>Start Now</button>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="shell">
+      {showKeyPrompt ? (
+        <div className="key-overlay" onClick={(e) => e.target === e.currentTarget && setShowKeyPrompt(false)}>
+          <div className="key-modal">
+            <p className="key-modal-title">Enter your OpenAI API key</p>
+            <p className="key-modal-desc">You have used your 5 free analyses. To continue, add your own OpenAI API key. It is sent only to the server for this session and never stored by us.</p>
+            <input
+              type="password"
+              className="key-input"
+              placeholder="sk-proj-..."
+              value={keyInput}
+              onChange={(e) => setKeyInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && saveKey()}
+            />
+            <div className="key-actions">
+              <button type="button" className="primary" onClick={saveKey}>Save &amp; continue</button>
+              <button type="button" className="secondary" onClick={() => setShowKeyPrompt(false)}>Cancel</button>
+            </div>
+            <p className="key-meta">Your key is held in browser storage only. It travels to the server with each request and is not logged or retained.</p>
+          </div>
+        </div>
+      ) : null}
       <header className="hero">
         <p className="eyebrow">dotai presents</p>
         <h1>Design Decode</h1>
@@ -163,6 +228,19 @@ function App() {
                 </button>
               ))}
             </div>
+          </div>
+
+          <div className="usage-info">
+            {userKey ? (
+              <span className="usage-key">Using your key</span>
+            ) : (
+              <span className="usage-count">{5 - usageCount} free analyses remaining</span>
+            )}
+            {!userKey ? (
+              <button type="button" className="usage-add-key" onClick={() => setShowKeyPrompt(true)}>Add your key</button>
+            ) : (
+              <button type="button" className="usage-add-key" onClick={() => { localStorage.removeItem('dd_key'); setUserKey(''); setUsageCount(0); localStorage.setItem('dd_usage', '0'); }}>Remove key</button>
+            )}
           </div>
 
           <div className="method-grid" aria-label="Decode lenses">
