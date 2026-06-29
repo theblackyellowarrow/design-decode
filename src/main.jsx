@@ -184,7 +184,16 @@ function App() {
   if (showLanding) {
     return (
       <main className="landing">
-        <div className="landing-hero">
+        <nav className="landing-nav">
+          <span className="nav-brand">dotai</span>
+          <div className="nav-links">
+            <a href="#about" className="nav-link">About</a>
+            <a href="#tool" className="nav-link">Tool</a>
+            <a href="#how" className="nav-link">How it works</a>
+          </div>
+        </nav>
+
+        <div className="landing-hero" id="tool">
           <div className="landing-grid" />
           <div className="landing-content">
             <p className="landing-eyebrow">dotai presents</p>
@@ -198,6 +207,16 @@ function App() {
         </div>
 
         <section className="landing-about">
+          <div className="landing-section" id="about">
+            <h2>About dotai</h2>
+            <p>dotai builds human-centred AI tools, learning systems, and finely tuned assistants for education, creativity, and Indian businesses. Founded by Rahul Bhattacharya, the practice combines LLM capabilities with design thinking, contextual research, and specialised training. Every tool is built for legibility, editability, and critical use — not automation for its own sake.</p>
+            <div className="about-links">
+              <a href="https://dotai.org/" target="_blank" rel="noopener noreferrer">dotai.org</a>
+              <a href="https://www.linkedin.com/in/theblackyellowarrow/" target="_blank" rel="noopener noreferrer">Rahul on LinkedIn</a>
+              <a href="https://www.linkedin.com/company/dotaitechnodrome" target="_blank" rel="noopener noreferrer">dotai on LinkedIn</a>
+            </div>
+          </div>
+
           <div className="landing-section">
             <h2>About the tool</h2>
             <p>Design Decode reads images through five analytical lenses, each grounded in a distinct design discipline. It does not summarise, optimise, or praise. It reads, interprets, and critiques. The intelligence behind it is a carefully tuned language model persona: a design educator trained across visual culture, UX, semiotics, materiality, and critical theory. Every claim is grounded in visible evidence or marked as inference.</p>
@@ -222,7 +241,7 @@ function App() {
             </div>
           </div>
 
-          <div className="landing-section">
+          <div className="landing-section" id="how">
             <h2>How it works</h2>
             <ol className="steps-list">
               <li>Upload a design image. Poster, interface, packaging, spatial composition</li>
