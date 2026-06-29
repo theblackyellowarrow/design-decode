@@ -187,7 +187,7 @@ function App() {
         <div className="landing-grid" />
         <div className="landing-content">
           <p className="landing-eyebrow">dotai presents</p>
-          <h1 className="landing-title">Design Decode</h1>
+          <h1 className="landing-title">Design Dec<span className="landing-o">o</span>de</h1>
           <p className="landing-sub">A critical image analysis tool that reads design through formal, UX, semiotic, production, and cultural lenses.</p>
           <p className="landing-desc">Upload any design image. Choose a lens. Get a sharp, evidence-grounded reading — not generic praise, not AI slop. Built for designers who think.</p>
           <p className="landing-meta">5 free analyses • or add your OpenAI key for unlimited use</p>
