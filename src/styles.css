@@ -120,59 +120,59 @@ button, input, textarea { font: inherit; }
 .landing-key-link:hover { color: var(--edge); }
 
 .landing-about {
-  max-width: 760px;
+  max-width: 680px;
   margin: 0 auto;
-  padding: 0 24px 80px;
+  padding: 0 24px 60px;
 }
 .landing-section {
-  margin-bottom: 48px;
+  margin-bottom: 32px;
 }
 .landing-section h2 {
   color: var(--edge);
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 700;
-  margin: 0 0 14px;
+  margin: 0 0 10px;
   letter-spacing: -0.01em;
 }
 .landing-section p {
   color: var(--grey);
-  font-size: 0.92rem;
-  line-height: 1.65;
+  font-size: 0.85rem;
+  line-height: 1.6;
   margin: 0;
 }
 .lens-list, .mode-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
 }
 .lens-item, .mode-item {
   display: flex;
-  gap: 12px;
-  padding: 12px 0;
+  gap: 10px;
+  padding: 8px 0;
   border-bottom: 1px solid var(--shadow);
 }
 .lens-item strong, .mode-item strong {
   color: var(--cyan);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
-  min-width: 120px;
+  min-width: 110px;
 }
 .lens-item span, .mode-item span {
   color: var(--grey);
-  font-size: 0.85rem;
-  line-height: 1.45;
+  font-size: 0.8rem;
+  line-height: 1.4;
 }
 .steps-list {
   padding: 0 0 0 18px;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 5px;
 }
 .steps-list li {
   color: var(--grey);
-  font-size: 0.9rem;
-  line-height: 1.55;
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 .steps-list li::marker {
   color: var(--cyan);
