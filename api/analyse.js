@@ -93,7 +93,7 @@ function decodeImageSize(base64) {
   return Math.ceil((base64.length * 3) / 4);
 }
 
-async function callOpenAI({ methodKey, imageBase64, mimeType, context, mode, apiKey }) {
+async function callOpenAI({ methodKey, imageBase64, mimeType, context, mode, apiKey, signal }) {
   const key = apiKey || process.env.OPENAI_API_KEY;
   if (!key) {
     const err = new Error('Missing OPENAI_API_KEY.');
@@ -122,7 +122,8 @@ async function callOpenAI({ methodKey, imageBase64, mimeType, context, mode, api
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${key}`
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify(payload),
+    signal: signal || undefined
   });
 
   const data = await upstream.json().catch(() => ({}));
@@ -184,7 +185,15 @@ export default async function handler(req, res) {
       return;
     }
 
-    const result = await callOpenAI({ methodKey, imageBase64, mimeType, context, mode: safeMode, apiKey });
+    const abortController = new AbortController();
+    const onClose = () => abortController.abort();
+    if (req.signal) {
+      req.signal.addEventListener('abort', onClose, { once: true });
+    } else {
+      req.on('close', onClose);
+    }
+
+    const result = await callOpenAI({ methodKey, imageBase64, mimeType, context, mode: safeMode, apiKey, signal: abortController.signal });
     res.statusCode = 200;
     res.end(JSON.stringify({ result }));
   } catch (error) {
