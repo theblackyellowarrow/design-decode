@@ -85,9 +85,14 @@ button, input, textarea { font: inherit; }
   margin: 0 0 28px;
 }
 .landing-meta {
-  color: #555;
-  font-size: 0.78rem;
+  color: var(--grey);
+  font-size: 0.9rem;
   margin: 0 0 32px;
+  font-weight: 500;
+}
+.landing-meta-highlight {
+  color: var(--cyan);
+  font-weight: 700;
 }
 .landing-cta {
   background: transparent;
