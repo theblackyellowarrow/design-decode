@@ -256,29 +256,25 @@ function App() {
           <div className="landing-section" id="enterprise">
             <h2>Enterprise</h2>
             <p>For design houses, education institutes, and research organisations that want to deploy Design Decode at scale with custom lenses, branding, or LMS integration. Request a conversation.</p>
-            <form className="enterprise-form" onSubmit={(e) => {
-              e.preventDefault();
-              const fd = new FormData(e.currentTarget);
-              const name = fd.get('name');
-              const org = fd.get('org');
-              const email = fd.get('email');
-              const msg = fd.get('msg');
-              const subject = `Design Decode Enterprise - ${org || name}`;
-              const body = `Name: ${name}%0D%0AOrganisation: ${org}%0D%0AEmail: ${email}%0D%0A%0D%0A${msg}`;
-              const a = document.createElement('a');
-              a.href = `mailto:theblackyellowarrow@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
-              a.style.display = 'none';
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-            }}>
+            <form className="enterprise-form" id="enterprise-form">
               <div className="form-row">
                 <input name="name" placeholder="Your name" required className="form-input" />
                 <input name="org" placeholder="Organisation" required className="form-input" />
               </div>
               <input name="email" type="email" placeholder="Email address" required className="form-input" />
               <textarea name="msg" placeholder="Tell us about your scale, use case, and customisation needs" required className="form-input" rows="3" />
-              <button type="submit" className="landing-cta" style={{padding: '10px 32px', fontSize: '0.85rem'}}>Send request</button>
+              <button type="button" className="landing-cta" style={{padding: '10px 32px', fontSize: '0.85rem'}} onClick={() => {
+                const form = document.getElementById('enterprise-form');
+                if (!form.checkValidity()) { form.reportValidity(); return; }
+                const fd = new FormData(form);
+                const name = fd.get('name') || '';
+                const org = fd.get('org') || '';
+                const email = fd.get('email') || '';
+                const msg = fd.get('msg') || '';
+                const subject = encodeURIComponent(`Design Decode Enterprise - ${org || name}`);
+                const body = encodeURIComponent(`Name: ${name}\nOrganisation: ${org}\nEmail: ${email}\n\n${msg}`);
+                window.location.href = `mailto:theblackyellowarrow@gmail.com?subject=${subject}&body=${body}`;
+              }}>Send request</button>
             </form>
           </div>
         </section>
