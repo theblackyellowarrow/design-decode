@@ -222,6 +222,7 @@ function App() {
         </div>
       ) : null}
       <header className="hero">
+        <button type="button" className="home-btn" onClick={() => setShowLanding(true)} aria-label="Home">← dotai</button>
         <p className="eyebrow">dotai presents</p>
         <h1>Design Decode</h1>
         <p>Image analysis tool for designers</p>
