@@ -43,8 +43,11 @@ button, input, textarea { font: inherit; }
   font-size: 0.85rem;
   text-transform: lowercase;
   letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
 }
-.nav-links { display: flex; gap: 20px; }
+.nav-brand:hover { color: #fff; }
+.nav-links { display: flex; gap: 20px; align-items: center; }
 .nav-link {
   color: var(--grey);
   font-size: 0.78rem;

@@ -185,11 +185,12 @@ function App() {
     return (
       <main className="landing">
         <nav className="landing-nav">
-          <span className="nav-brand">dotai</span>
+          <a href="#" className="nav-brand" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>dotai</a>
           <div className="nav-links">
             <a href="#tool" className="nav-link">Tool</a>
             <a href="#about" className="nav-link">About</a>
             <a href="#enterprise" className="nav-link">Enterprise</a>
+            <a href="#" className="nav-link nav-home" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>↑ Home</a>
           </div>
         </nav>
 
