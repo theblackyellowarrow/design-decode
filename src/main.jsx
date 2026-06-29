@@ -33,7 +33,6 @@ function App() {
   const [userKey, setUserKey] = useState(() => localStorage.getItem('dd_key') || '');
   const [showKeyPrompt, setShowKeyPrompt] = useState(false);
   const [keyInput, setKeyInput] = useState('');
-  const [enterpriseSent, setEnterpriseSent] = useState(false);
   const abortRef = useRef(null);
   const fileInputRef = useRef(null);
   const previewRef = useRef(null);
@@ -257,36 +256,13 @@ function App() {
           <div className="landing-section" id="enterprise">
             <h2>Enterprise</h2>
             <p>Design Decode can be adapted for universities, museums, research groups, studios, publishers, and cultural organisations. Custom deployments can include discipline-specific reading frameworks, institutional terminology, archive workflows, curriculum integration, branded environments, and bespoke analytical lenses. If your organisation is interested in developing a customised version, we would be pleased to begin a conversation.</p>
-            <form className="enterprise-form">
-              {enterpriseSent ? (
-                <div className="enterprise-sent">
-                  <p>Thank you. If your email client did not open, please write to us directly:</p>
-                  <a href="mailto:theblackyellowarrow@gmail.com" className="enterprise-email">theblackyellowarrow@gmail.com</a>
-                </div>
-              ) : (
-                <>
-              <div className="form-row">
-                <input name="name" placeholder="Your name" required className="form-input" />
-                <input name="org" placeholder="Organisation" required className="form-input" />
-              </div>
-              <input name="email" type="email" placeholder="Email address" required className="form-input" />
-              <textarea name="msg" placeholder="Tell us about your scale, use case, and customisation needs" required className="form-input" rows="3" />
-              <button type="button" className="landing-cta" style={{padding: '10px 32px', fontSize: '0.85rem'}} onClick={(e) => {
-                const form = e.target.closest('form');
-                if (!form.checkValidity()) { form.reportValidity(); return; }
-                setEnterpriseSent(true);
-                const fd = new FormData(form);
-                const name = fd.get('name') || '';
-                const org = fd.get('org') || '';
-                const email = fd.get('email') || '';
-                const msg = fd.get('msg') || '';
-                const subject = encodeURIComponent('Design Decode Enterprise - ' + (org || name));
-                const body = encodeURIComponent('Name: ' + name + '\nOrganisation: ' + org + '\nEmail: ' + email + '\n\n' + msg);
-                window.location.href = 'mailto:theblackyellowarrow@gmail.com?subject=' + subject + '&body=' + body;
-              }}>Send request</button>
-                </>
-              )}
-            </form>
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLScMHx_XmBp3fIzSo2nwkan7-5U-p1DGfSC09gcs4Bwwln165Q/viewform?embedded=true"
+              className="enterprise-iframe"
+              title="Enterprise enquiry form"
+            >
+              Loading form...
+            </iframe>
           </div>
 
           <div className="landing-section" style={{textAlign: 'center', color: 'var(--grey)', fontSize: '0.78rem', paddingTop: '40px', borderTop: '1px solid var(--shadow)'}}>
