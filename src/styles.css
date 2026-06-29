@@ -163,6 +163,12 @@ button, input, textarea { font: inherit; }
 }
 .landing-section {
   margin-bottom: 32px;
+  scroll-margin-top: 60px;
+}
+.landing-section:target {
+  border-left: 2px solid var(--cyan);
+  padding-left: 16px;
+  margin-left: -18px;
 }
 .landing-section h2 {
   color: var(--edge);
