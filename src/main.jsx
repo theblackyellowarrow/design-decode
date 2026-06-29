@@ -267,7 +267,10 @@ function App() {
               const body = `Name: ${name}%0D%0AOrganisation: ${org}%0D%0AEmail: ${email}%0D%0A%0D%0A${msg}`;
               const a = document.createElement('a');
               a.href = `mailto:theblackyellowarrow@gmail.com?subject=${encodeURIComponent(subject)}&body=${body}`;
+              a.style.display = 'none';
+              document.body.appendChild(a);
               a.click();
+              document.body.removeChild(a);
             }}>
               <div className="form-row">
                 <input name="name" placeholder="Your name" required className="form-input" />
