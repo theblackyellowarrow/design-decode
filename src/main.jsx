@@ -187,9 +187,8 @@ function App() {
         <nav className="landing-nav">
           <span className="nav-brand">dotai</span>
           <div className="nav-links">
-            <a href="#about" className="nav-link">About</a>
             <a href="#tool" className="nav-link">Tool</a>
-            <a href="#how" className="nav-link">How it works</a>
+            <a href="#about" className="nav-link">About</a>
             <a href="#enterprise" className="nav-link">Enterprise</a>
           </div>
         </nav>
@@ -199,63 +198,58 @@ function App() {
           <div className="landing-content">
             <p className="landing-eyebrow">dotai presents</p>
             <h1 className="landing-title">Design Dec<span className="landing-o">o</span>de</h1>
-            <p className="landing-sub">A critical image analysis tool that reads design through formal, UX, semiotic, production, and cultural lenses.</p>
-            <p className="landing-desc">Upload any design image. Choose up to 3 lenses. Get sharp, evidence-grounded readings. Not generic praise, not AI slop. Built for designers who think.</p>
+            <p className="landing-sub">A Critical Design Reading Environment</p>
+            <p className="landing-desc">Design is rarely read from a single point of view. Every poster, interface, publication, object, exhibition, package, or spatial intervention carries formal decisions, cultural assumptions, production histories, patterns of interaction, and systems of meaning. Design Decode brings these perspectives together.</p>
             <p className="landing-meta"><span className="landing-meta-highlight">5 free analyses</span> or add your OpenAI key for unlimited use</p>
             <button type="button" className="landing-cta" onClick={() => setShowLanding(false)}>Start Now</button>
             <button type="button" className="landing-key-link" onClick={() => { setShowLanding(false); setShowKeyPrompt(true); }}>I have my own key</button>
           </div>
         </div>
 
-        <section className="landing-about">
-          <div className="landing-section" id="about">
-            <h2>About dotai</h2>
-            <p>dotai builds human-centred AI tools, learning systems, and finely tuned assistants for education, creativity, and Indian businesses. Founded by Rahul Bhattacharya, the practice combines LLM capabilities with design thinking, contextual research, and specialised training. Every tool is built for legibility, editability, and critical use — not automation for its own sake.</p>
-            <div className="about-links">
-              <a href="https://dotai.org/" target="_blank" rel="noopener noreferrer">dotai.org</a>
-              <a href="https://www.linkedin.com/in/theblackyellowarrow/" target="_blank" rel="noopener noreferrer">Rahul on LinkedIn</a>
-              <a href="https://www.linkedin.com/company/dotaitechnodrome" target="_blank" rel="noopener noreferrer">dotai on LinkedIn</a>
-            </div>
-          </div>
-
+        <section className="landing-about" id="about">
           <div className="landing-section">
-            <h2>About the tool</h2>
-            <p>Design Decode reads images through five analytical lenses, each grounded in a distinct design discipline. It does not summarise, optimise, or praise. It reads, interprets, and critiques. The intelligence behind it is a carefully tuned language model persona: a design educator trained across visual culture, UX, semiotics, materiality, and critical theory. Every claim is grounded in visible evidence or marked as inference.</p>
-          </div>
-
-          <div className="landing-section">
-            <h2>Five lenses</h2>
+            <h2>Read Through Five Lenses</h2>
             <div className="lens-list">
-              <div className="lens-item"><strong>Visual Form</strong><span>Elements, principles, Gestalt, composition, visual traditions</span></div>
-              <div className="lens-item"><strong>User Flow</strong><span>Information architecture, navigation, affordance, cognitive load, accessibility</span></div>
-              <div className="lens-item"><strong>Symbol Logic</strong><span>Semiotics, denotation and connotation, cultural codes, visual rhetoric</span></div>
-              <div className="lens-item"><strong>Production Logic</strong><span>Materiality, medium, finish, sustainability, labour, lifecycle</span></div>
-              <div className="lens-item"><strong>Cultural Lens</strong><span>Class, caste, gender, race, sexuality, disability, region, power</span></div>
+              <div className="lens-item"><strong>Visual Form</strong><span>Composition, hierarchy, rhythm, typography, colour, Gestalt, proportion, and visual language.</span></div>
+              <div className="lens-item"><strong>User Flow</strong><span>Navigation, affordance, information architecture, cognitive load, accessibility, and patterns of interaction.</span></div>
+              <div className="lens-item"><strong>Symbol Logic</strong><span>Semiotics, visual rhetoric, metaphor, denotation, connotation, and cultural codes.</span></div>
+              <div className="lens-item"><strong>Production Logic</strong><span>Materiality, manufacture, sustainability, labour, lifecycle, and the conditions through which objects come into being.</span></div>
+              <div className="lens-item"><strong>Cultural Lens</strong><span>Identity, power, class, caste, gender, race, disability, sexuality, region, and the wider social structures reflected within design.</span></div>
+            </div>
+            <p style={{marginTop: '12px'}}>Choose up to three lenses during a session and compare different readings of the same image.</p>
+          </div>
+
+          <div className="landing-section">
+            <h2>Two Reading Modes</h2>
+            <div className="mode-list">
+              <div className="mode-item"><strong>Standard</strong><span>Focused, concise readings suitable for everyday critique, studio discussions, and rapid reflection.</span></div>
+              <div className="mode-item"><strong>Expert</strong><span>Extended readings with broader theoretical context, historical references, and deeper critical discussion.</span></div>
             </div>
           </div>
 
           <div className="landing-section">
-            <h2>Two modes</h2>
-            <div className="mode-list">
-              <div className="mode-item"><strong>Standard</strong><span>A sharp-eyed design student. Direct, curious, under 200 words. Wears knowledge lightly.</span></div>
-              <div className="mode-item"><strong>Expert</strong><span>A senior educator. Forensic detail, design-history references, discussion questions. Under 300 words.</span></div>
-            </div>
+            <h2>Built Around Critique</h2>
+            <p>Design Decode is shaped by the culture of design studios, seminars, and critical discussion. Rather than producing a single authoritative judgement, it develops multiple readings of the same work. It separates what can be directly observed from what must be interpreted and encourages further enquiry through follow-up critical questions generated for every completed reading. The result is less a report than an evolving conversation with the work itself.</p>
           </div>
 
-          <div className="landing-section" id="how">
-            <h2>How it works</h2>
-            <ol className="steps-list">
-              <li>Upload a design image. Poster, interface, packaging, spatial composition</li>
-              <li>Choose up to 3 lenses. Readings run in parallel</li>
-              <li>Select a mode. Standard or expert voice</li>
-              <li>Run the decode. Each lens returns a structured reading</li>
-              <li>Export your results as Markdown for your records</li>
-            </ol>
+          <div className="landing-section">
+            <h2>Export Your Sessions</h2>
+            <p>Individual readings and complete critique sessions can be exported as Markdown for teaching, research, documentation, publication, and collaborative review. Each exported session preserves both the observations and the questions that emerged during the reading.</p>
+          </div>
+
+          <div className="landing-section">
+            <h2>About dotai</h2>
+            <p>dotai is an independent research and product practice exploring new ways of learning, designing, and working with computational systems. Its projects combine design education, critical research, publishing, archival practice, and software development to create tools that support careful thinking rather than automation alone. Every project begins with a discipline, a community, or a way of working, then grows into software shaped around that context. Design Decode is part of a growing collection of experimental tools for design education, creative practice, research, and cultural work.</p>
+            <div className="about-links">
+              <a href="https://dotai.org/" target="_blank" rel="noopener noreferrer">Website</a>
+              <a href="https://www.linkedin.com/company/dotaitechnodrome" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/theblackyellowarrow/" target="_blank" rel="noopener noreferrer">Founder</a>
+            </div>
           </div>
 
           <div className="landing-section" id="enterprise">
             <h2>Enterprise</h2>
-            <p>For design houses, education institutes, and research organisations that want to deploy Design Decode at scale with custom lenses, branding, or LMS integration. Request a conversation.</p>
+            <p>Design Decode can be adapted for universities, museums, research groups, studios, cultural organisations, publishers, and businesses seeking discipline-specific methods of design reading. Custom deployments can include institutional terminology, additional analytical lenses, archive workflows, curriculum integration, branded environments, and bespoke research tools.</p>
             <form className="enterprise-form" id="enterprise-form">
               <div className="form-row">
                 <input name="name" placeholder="Your name" required className="form-input" />
@@ -276,6 +270,10 @@ function App() {
                 window.location.href = `mailto:theblackyellowarrow@gmail.com?subject=${subject}&body=${body}`;
               }}>Send request</button>
             </form>
+          </div>
+
+          <div className="landing-section" style={{textAlign: 'center', color: 'var(--grey)', fontSize: '0.78rem', paddingTop: '40px', borderTop: '1px solid var(--shadow)'}}>
+            <p>Built by dotai.</p>
           </div>
         </section>
       </main>
