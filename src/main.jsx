@@ -190,6 +190,7 @@ function App() {
             <a href="#about" className="nav-link">About</a>
             <a href="#tool" className="nav-link">Tool</a>
             <a href="#how" className="nav-link">How it works</a>
+            <a href="#enterprise" className="nav-link">Enterprise</a>
           </div>
         </nav>
 
@@ -250,6 +251,30 @@ function App() {
               <li>Run the decode. Each lens returns a structured reading</li>
               <li>Export your results as Markdown for your records</li>
             </ol>
+          </div>
+
+          <div className="landing-section" id="enterprise">
+            <h2>Enterprise</h2>
+            <p>For design houses, education institutes, and research organisations that want to deploy Design Decode at scale with custom lenses, branding, or LMS integration — request a conversation.</p>
+            <form className="enterprise-form" onSubmit={(e) => {
+              e.preventDefault();
+              const fd = new FormData(e.target);
+              const name = fd.get('name');
+              const org = fd.get('org');
+              const email = fd.get('email');
+              const msg = fd.get('msg');
+              const subject = encodeURIComponent(`Design Decode Enterprise — ${org || name}`);
+              const body = encodeURIComponent(`Name: ${name}\nOrganisation: ${org}\nEmail: ${email}\n\n${msg}`);
+              window.location.href = `mailto:theblackyellowarrow@gmail.com?subject=${subject}&body=${body}`;
+            }}>
+              <div className="form-row">
+                <input name="name" placeholder="Your name" required className="form-input" />
+                <input name="org" placeholder="Organisation" required className="form-input" />
+              </div>
+              <input name="email" type="email" placeholder="Email address" required className="form-input" />
+              <textarea name="msg" placeholder="Tell us about your scale, use case, and customisation needs" required className="form-input" rows="3" />
+              <button type="submit" className="landing-cta" style={{padding: '10px 32px', fontSize: '0.85rem'}}>Send request</button>
+            </form>
           </div>
         </section>
       </main>
