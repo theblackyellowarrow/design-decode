@@ -210,7 +210,7 @@ function App() {
             <p className="landing-desc">Built for designers, educators, researchers, students, curators, studios, and cultural practitioners.</p>
             <p className="landing-meta"><span className="landing-meta-highlight">5 free analyses</span> or add your OpenAI key for unlimited use</p>
             <button type="button" className="landing-cta" onClick={() => { setMode('standard'); setShowLanding(false); history.replaceState(null, '', '#toollearner'); }}>Enter as Learner</button>
-            <button type="button" className="landing-cta landing-cta-expert" onClick={() => { setMode('expert'); setShowLanding(false); history.replaceState(null, '', '#toolexpert'); }}>Enter as Expert</button>
+            <button type="button" className="landing-cta" onClick={() => { setMode('expert'); setShowLanding(false); history.replaceState(null, '', '#toolexpert'); }}>Enter as Expert</button>
             <button type="button" className="landing-key-link" onClick={() => { setShowLanding(false); setShowKeyPrompt(true); history.replaceState(null, '', '#tool'); }}>I have my own key</button>
           </div>
         </div>

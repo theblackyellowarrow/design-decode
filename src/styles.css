@@ -131,8 +131,8 @@ button, input, textarea { font: inherit; }
 }
 .landing-cta {
   background: transparent;
-  color: var(--cyan);
-  border: 2px solid var(--cyan);
+  color: var(--edge);
+  border: 2px solid var(--edge);
   border-radius: 0;
   padding: 14px 48px;
   cursor: pointer;
@@ -145,18 +145,10 @@ button, input, textarea { font: inherit; }
   margin: 0 auto;
 }
 .landing-cta:hover {
-  background: var(--cyan);
+  background: var(--edge);
   color: #000;
 }
-.landing-cta-expert {
-  color: var(--orange);
-  border-color: var(--orange);
-  margin-top: 12px;
-}
-.landing-cta-expert:hover {
-  background: var(--orange);
-  color: #000;
-}
+.landing-cta + .landing-cta { margin-top: 12px; }
 .landing-key-link {
   display: block;
   background: none;
