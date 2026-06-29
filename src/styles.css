@@ -241,15 +241,15 @@ button, input, textarea { font: inherit; }
 .form-input {
   width: 100%;
   background: #0a0a0a;
-  color: var(--edge);
-  border: 1px solid var(--shadow);
-  padding: 10px 14px;
+  color: #e0e0e0;
+  border: 1px solid #333;
+  padding: 11px 14px;
   font-size: 0.85rem;
   font-family: inherit;
   resize: vertical;
 }
 .form-input:focus { border-color: var(--cyan); outline: none; }
-.form-input::placeholder { color: #444; }
+.form-input::placeholder { color: #666; }
 
 /* ── Shell ── */
 .shell { max-width: 1180px; margin: 0 auto; padding: 40px 24px 80px; }

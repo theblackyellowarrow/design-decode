@@ -255,7 +255,7 @@ function App() {
 
           <div className="landing-section" id="enterprise">
             <h2>Enterprise</h2>
-            <p>For design houses, education institutes, and research organisations that want to deploy Design Decode at scale with custom lenses, branding, or LMS integration — request a conversation.</p>
+            <p>For design houses, education institutes, and research organisations that want to deploy Design Decode at scale with custom lenses, branding, or LMS integration. Request a conversation.</p>
             <form className="enterprise-form" onSubmit={(e) => {
               e.preventDefault();
               const fd = new FormData(e.target);
