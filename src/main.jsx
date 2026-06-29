@@ -43,7 +43,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (window.location.hash === '#tool') setShowLanding(false);
+    const hash = window.location.hash;
+    if (hash === '#toollearner') { setMode('standard'); setShowLanding(false); }
+    else if (hash === '#toolexpert') { setMode('expert'); setShowLanding(false); }
+    else if (hash === '#tool') setShowLanding(false);
   }, []);
 
   async function handleFile(event) {
@@ -206,7 +209,8 @@ function App() {
             <p className="landing-desc">Design is rarely read from a single point of view. Every poster, interface, publication, object, exhibition, package, or spatial intervention carries formal decisions, cultural assumptions, production histories, patterns of interaction, and systems of meaning. Design Decode brings these perspectives together within a single environment for critical reading.</p>
             <p className="landing-desc">Built for designers, educators, researchers, students, curators, studios, and cultural practitioners.</p>
             <p className="landing-meta"><span className="landing-meta-highlight">5 free analyses</span> or add your OpenAI key for unlimited use</p>
-            <button type="button" className="landing-cta" onClick={() => { setShowLanding(false); history.replaceState(null, '', '#tool'); }}>Begin a Reading</button>
+            <button type="button" className="landing-cta" onClick={() => { setMode('standard'); setShowLanding(false); history.replaceState(null, '', '#toollearner'); }}>Enter as Learner</button>
+            <button type="button" className="landing-cta landing-cta-expert" onClick={() => { setMode('expert'); setShowLanding(false); history.replaceState(null, '', '#toolexpert'); }}>Enter as Expert</button>
             <button type="button" className="landing-key-link" onClick={() => { setShowLanding(false); setShowKeyPrompt(true); history.replaceState(null, '', '#tool'); }}>I have my own key</button>
           </div>
         </div>
@@ -301,29 +305,13 @@ function App() {
       ) : null}
       <header className="hero">
         <button type="button" className="home-btn" onClick={() => { setShowLanding(true); history.replaceState(null, '', '#home'); }} aria-label="Home">← dotai</button>
-        <p className="eyebrow">dotai presents</p>
+        <p className="eyebrow">dotai presents &mdash; {mode === 'expert' ? 'Expert' : 'Learner'} mode</p>
         <h1>Design Decode</h1>
         <p>Image analysis tool for designers</p>
       </header>
 
       <section className="panel grid">
         <div className="controls">
-          <div className="mode-selector" aria-label="Pedagogy mode">
-            <span>Mode</span>
-            <div className="mode-options">
-              {['standard', 'expert'].map((m) => (
-                <button
-                  type="button"
-                  key={m}
-                  className={mode === m ? 'mode-btn selected' : 'mode-btn'}
-                  onClick={() => setMode(m)}
-                >
-                  {m}
-                </button>
-              ))}
-            </div>
-          </div>
-
           <div className="usage-info">
             <div className="usage-status">
               {userKey ? (

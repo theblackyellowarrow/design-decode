@@ -141,9 +141,20 @@ button, input, textarea { font: inherit; }
   text-transform: uppercase;
   letter-spacing: 0.08em;
   transition: all 0.15s;
+  display: block;
+  margin: 0 auto;
 }
 .landing-cta:hover {
   background: var(--cyan);
+  color: #000;
+}
+.landing-cta-expert {
+  color: var(--orange);
+  border-color: var(--orange);
+  margin-top: 12px;
+}
+.landing-cta-expert:hover {
+  background: var(--orange);
   color: #000;
 }
 .landing-key-link {
