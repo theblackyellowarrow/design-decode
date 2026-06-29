@@ -92,6 +92,18 @@ button, input, textarea { font: inherit; }
   color: #041014;
   box-shadow: 0 0 50px rgba(6, 182, 212, 0.4), inset 0 0 50px rgba(6, 182, 212, 0.1);
 }
+.landing-key-link {
+  display: block;
+  background: none;
+  color: #a5f3fc;
+  border: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  margin-top: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.landing-key-link:hover { color: #67e8f9; }
 
 /* ── Shell ── */
 
@@ -193,10 +205,12 @@ button:focus-visible, input:focus-visible { outline: 3px solid #facc15; outline-
 .questions-label { color: #a5f3fc; font-size: 0.78rem; font-weight: 700; margin: 0 0 6px; text-transform: uppercase; letter-spacing: 0.06em; }
 
 /* ── Usage ── */
-.usage-info { display: flex; align-items: center; gap: 8px; }
-.usage-count { color: #6b7280; font-size: 0.75rem; }
-.usage-key { color: #10b981; font-size: 0.75rem; font-weight: 600; }
-.usage-add-key { font-size: 0.7rem; background: none; color: #06b6d4; border: 1px solid #06b6d4; border-radius: 6px; padding: 3px 8px; cursor: pointer; }
+.usage-info { background: #141416; border: 1px solid #1f2937; border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.usage-status { display: flex; flex-direction: column; }
+.usage-count { color: #9ca3af; font-size: 0.78rem; line-height: 1.3; }
+.usage-key { color: #10b981; font-size: 0.78rem; font-weight: 600; }
+.usage-add-key { font-size: 0.78rem; background: #06b6d4; color: #041014; border: none; border-radius: 8px; padding: 6px 14px; cursor: pointer; font-weight: 700; white-space: nowrap; }
+.usage-add-key:hover { filter: brightness(1.1); }
 
 /* ── Key modal ── */
 .key-overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 100; }

@@ -190,8 +190,9 @@ function App() {
           <h1 className="landing-title">Design Decode</h1>
           <p className="landing-sub">A critical image analysis tool that reads design through formal, UX, semiotic, production, and cultural lenses.</p>
           <p className="landing-desc">Upload any design image. Choose a lens. Get a sharp, evidence-grounded reading — not generic praise, not AI slop. Built for designers who think.</p>
-          <p className="landing-meta">5 free analyses • then bring your own OpenAI key</p>
+          <p className="landing-meta">5 free analyses • or add your OpenAI key for unlimited use</p>
           <button type="button" className="landing-cta" onClick={() => setShowLanding(false)}>Start Now</button>
+          <button type="button" className="landing-key-link" onClick={() => { setShowLanding(false); setShowKeyPrompt(true); }}>I have my own key</button>
         </div>
       </main>
     );
@@ -245,13 +246,15 @@ function App() {
           </div>
 
           <div className="usage-info">
-            {userKey ? (
-              <span className="usage-key">Using your key</span>
-            ) : (
-              <span className="usage-count">{5 - usageCount} free analyses remaining</span>
-            )}
+            <div className="usage-status">
+              {userKey ? (
+                <span className="usage-key">Your key is active</span>
+              ) : (
+                <span className="usage-count">{5 - usageCount} free analysis runs remaining</span>
+              )}
+            </div>
             {!userKey ? (
-              <button type="button" className="usage-add-key" onClick={() => setShowKeyPrompt(true)}>Add your key</button>
+              <button type="button" className="usage-add-key" onClick={() => setShowKeyPrompt(true)}>+ Add your OpenAI key</button>
             ) : (
               <button type="button" className="usage-add-key" onClick={() => { localStorage.removeItem('dd_key'); setUserKey(''); setUsageCount(0); localStorage.setItem('dd_usage', '0'); }}>Remove key</button>
             )}
