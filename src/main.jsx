@@ -42,6 +42,10 @@ function App() {
     if (previewRef.current) URL.revokeObjectURL(previewRef.current);
   }, []);
 
+  useEffect(() => {
+    if (window.location.hash === '#tool') setShowLanding(false);
+  }, []);
+
   async function handleFile(event) {
     const file = event.target.files?.[0];
     setError('');
@@ -202,8 +206,8 @@ function App() {
             <p className="landing-desc">Design is rarely read from a single point of view. Every poster, interface, publication, object, exhibition, package, or spatial intervention carries formal decisions, cultural assumptions, production histories, patterns of interaction, and systems of meaning. Design Decode brings these perspectives together within a single environment for critical reading.</p>
             <p className="landing-desc">Built for designers, educators, researchers, students, curators, studios, and cultural practitioners.</p>
             <p className="landing-meta"><span className="landing-meta-highlight">5 free analyses</span> or add your OpenAI key for unlimited use</p>
-            <button type="button" className="landing-cta" onClick={() => setShowLanding(false)}>Begin a Reading</button>
-            <button type="button" className="landing-key-link" onClick={() => { setShowLanding(false); setShowKeyPrompt(true); }}>I have my own key</button>
+            <button type="button" className="landing-cta" onClick={() => { setShowLanding(false); history.replaceState(null, '', '#tool'); }}>Begin a Reading</button>
+            <button type="button" className="landing-key-link" onClick={() => { setShowLanding(false); setShowKeyPrompt(true); history.replaceState(null, '', '#tool'); }}>I have my own key</button>
           </div>
         </div>
 
@@ -296,7 +300,7 @@ function App() {
         </div>
       ) : null}
       <header className="hero">
-        <button type="button" className="home-btn" onClick={() => setShowLanding(true)} aria-label="Home">← dotai</button>
+        <button type="button" className="home-btn" onClick={() => { setShowLanding(true); history.replaceState(null, '', '#home'); }} aria-label="Home">← dotai</button>
         <p className="eyebrow">dotai presents</p>
         <h1>Design Decode</h1>
         <p>Image analysis tool for designers</p>
