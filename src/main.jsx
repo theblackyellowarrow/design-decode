@@ -193,7 +193,7 @@ function App() {
           </div>
         </nav>
 
-        <div className="landing-hero" id="tool">
+        <div className="landing-hero">
           <div className="landing-grid" />
           <div className="landing-content">
             <p className="landing-eyebrow">dotai presents</p>
@@ -207,13 +207,13 @@ function App() {
           </div>
         </div>
 
-        <section className="landing-about" id="about">
+        <section className="landing-about">
           <div className="landing-section">
             <h2>Built Around Critique</h2>
             <p>Design Decode grows from the culture of design studios, seminars, juries, and research rather than automated evaluation. It develops multiple readings of the same work instead of producing a single judgement. Every response separates what can be directly observed from what must be interpreted, and clearly indicates where conclusions extend into informed inference. Each reading can also generate a new set of critical questions, encouraging discussion, reflection, and further enquiry rather than closing interpretation. Design Decode is intended to support the practice of looking carefully.</p>
           </div>
 
-          <div className="landing-section">
+          <div className="landing-section" id="tool">
             <h2>The Tool</h2>
             <p>Upload a design image and select up to three analytical lenses. Readings are generated independently for each lens, allowing different disciplinary perspectives to exist alongside one another rather than collapsing into a single summary. Choose between Standard and Expert reading modes depending on the depth of analysis required. Every session can be exported as Markdown, preserving observations, interpretations, critical questions, and contextual notes for teaching, research, documentation, or collaborative review.</p>
           </div>
@@ -237,7 +237,7 @@ function App() {
             </div>
           </div>
 
-          <div className="landing-section">
+          <div className="landing-section" id="about">
             <h2>About dotai</h2>
             <p>dotai is an independent design research and product practice based in India. We build computational tools, publishing platforms, research environments, and learning systems for creative disciplines. Every project begins with a way of thinking before becoming a piece of software. Rather than treating technology as a destination, dotai explores how it can expand critical practice, design education, cultural research, and creative work. Design Decode is part of a growing collection of experimental tools that includes translation environments, research assistants, visual thinking systems, and studios for building with emerging technologies.</p>
             <div className="about-links">
