@@ -23,7 +23,7 @@ button, input, textarea { font: inherit; }
   overflow-x: hidden;
 }
 .landing-hero {
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,7 +43,7 @@ button, input, textarea { font: inherit; }
   position: relative;
   text-align: center;
   max-width: 560px;
-  padding: 40px 24px;
+  padding: 60px 24px 32px;
 }
 .landing-eyebrow {
   color: var(--grey);
