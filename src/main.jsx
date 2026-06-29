@@ -208,7 +208,7 @@ function App() {
             <p className="landing-sub">A Critical Design Reading Environment</p>
             <p className="landing-desc">Design is rarely read from a single point of view. Every poster, interface, publication, object, exhibition, package, or spatial intervention carries formal decisions, cultural assumptions, production histories, patterns of interaction, and systems of meaning. Design Decode brings these perspectives together within a single environment for critical reading.</p>
             <p className="landing-desc">Built for designers, educators, researchers, students, curators, studios, and cultural practitioners.</p>
-            <p className="landing-meta"><span className="landing-meta-highlight">5 free analyses</span> or add your OpenAI key for unlimited use</p>
+            <p className="landing-meta"><span className="landing-meta-highlight">5 test readings</span> or continue with your own OpenAI key</p>
             <button type="button" className="landing-cta" onClick={() => { setMode('standard'); setShowLanding(false); history.replaceState(null, '', '#toollearner'); }}>Enter as Learner</button>
             <button type="button" className="landing-cta" onClick={() => { setMode('expert'); setShowLanding(false); history.replaceState(null, '', '#toolexpert'); }}>Enter as Expert</button>
             <button type="button" className="landing-key-link" onClick={() => { setShowLanding(false); setShowKeyPrompt(true); history.replaceState(null, '', '#tool'); }}>I have my own key</button>
@@ -285,8 +285,9 @@ function App() {
       {showKeyPrompt ? (
         <div className="key-overlay" onClick={(e) => e.target === e.currentTarget && setShowKeyPrompt(false)}>
           <div className="key-modal">
-            <p className="key-modal-title">Enter your OpenAI API key</p>
-            <p className="key-modal-desc">You have used your 5 free analyses. To continue, add your own OpenAI API key. It is sent only to the server for this session and never stored by us.</p>
+            <p className="key-modal-title">Continue with your own OpenAI key</p>
+            <p className="key-modal-desc">You have used your 5 test readings. To continue, add your own OpenAI API key. It is sent only to the server for this session and never stored by us.</p>
+            <p className="key-modal-desc" style={{color: 'var(--orange)', fontSize: '0.78rem', marginTop: '4px'}}>For testing, use a restricted key with low spend limits.</p>
             <input
               type="password"
               className="key-input"
@@ -317,11 +318,11 @@ function App() {
               {userKey ? (
                 <span className="usage-key">Your key is active</span>
               ) : (
-                <span className="usage-count">{5 - usageCount} free analysis runs remaining</span>
+                <span className="usage-count">{5 - usageCount} test readings remaining</span>
               )}
             </div>
             {!userKey ? (
-              <button type="button" className="usage-add-key" onClick={() => setShowKeyPrompt(true)}>+ Add your OpenAI key</button>
+              <button type="button" className="usage-add-key" onClick={() => setShowKeyPrompt(true)}>+ Continue with your own key</button>
             ) : (
               <button type="button" className="usage-add-key" onClick={() => { localStorage.removeItem('dd_key'); setUserKey(''); setUsageCount(0); localStorage.setItem('dd_usage', '0'); }}>Remove key</button>
             )}

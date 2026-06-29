@@ -57,7 +57,7 @@ Server-side abort propagation: client disconnect cancels the in-flight OpenAI re
 
 ## Features
 
-- 5 free analyses using the server's OpenAI key, then bring-your-own-key
+- 5 test readings using the server's OpenAI key, then bring-your-own-key (temporary controlled-testing feature, not intended for full public launch)
 - Key stored in `localStorage`, never logged server-side
 - Client-side image compression (JPEG, max 1920px, quality 0.85)
 - Markdown export with dotai branding (per lens and full session)
