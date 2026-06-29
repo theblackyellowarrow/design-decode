@@ -240,13 +240,18 @@ function App() {
 
           <div className="landing-section" id="about">
             <h2>About dotai</h2>
-            <p>dotai is an independent design research and product practice based in India. We build computational tools, publishing platforms, research environments, and learning systems for creative disciplines. Every project begins with a way of thinking before becoming a piece of software. Rather than treating technology as a destination, dotai explores how it can expand critical practice, design education, cultural research, and creative work. Design Decode is part of a growing collection of experimental tools that includes translation environments, research assistants, visual thinking systems, and studios for building with emerging technologies.</p>
+            <p className="about-tagline">The AI_Line_ment for India Starts Here.</p>
+            <p>dotai is an independent design research and technology practice building context-first computational tools for India. We believe that software should grow from disciplines, communities, languages, archives, and ways of working rather than asking people to adapt themselves to generic systems. Every project begins with a question emerging from design, education, research, or cultural practice, then develops into software shaped by that context.</p>
+            <p>Our work spans critical design, creative education, archival research, translation, publishing, knowledge systems, and experimental product development. From studio classrooms to museums, independent researchers to creative businesses, dotai develops tools that make specialised knowledge more accessible, more collaborative, and easier to work with.</p>
+            <p>Design Decode is one part of a growing ecosystem that includes research environments, translation platforms, creative playgrounds, contextual assistants, and publishing tools designed for Indian practitioners and global conversations alike.</p>
+            <p className="about-subhead">Explore dotai</p>
             <div className="about-links">
               <a href="https://dotai.org/" target="_blank" rel="noopener noreferrer">Website</a>
-              <a href="https://www.linkedin.com/company/dotaitechnodrome" target="_blank" rel="noopener noreferrer">LinkedIn</a>
               <a href="https://www.linkedin.com/in/theblackyellowarrow/" target="_blank" rel="noopener noreferrer">Founder</a>
+              <a href="https://www.linkedin.com/company/dotaitechnodrome" target="_blank" rel="noopener noreferrer">Follow dotai</a>
             </div>
-            <p style={{marginTop: '12px'}}>Rahul Bhattacharya is a design educator, curator, writer, and researcher working across design pedagogy, critical theory, computational systems, and cultural practice. His work explores how technology can be shaped through disciplinary knowledge rather than generic automation.</p>
+            <p className="about-subhead">Founder</p>
+            <p>Rahul Bhattacharya is a design educator, curator, researcher, and writer working at the intersection of design, technology, and cultural practice. His work explores how computational systems can be shaped through disciplinary knowledge, critical pedagogy, and local context.</p>
           </div>
 
           <div className="landing-section" id="enterprise">
