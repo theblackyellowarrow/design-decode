@@ -184,16 +184,55 @@ function App() {
   if (showLanding) {
     return (
       <main className="landing">
-        <div className="landing-grid" />
-        <div className="landing-content">
-          <p className="landing-eyebrow">dotai presents</p>
-          <h1 className="landing-title">Design Dec<span className="landing-o">o</span>de</h1>
-          <p className="landing-sub">A critical image analysis tool that reads design through formal, UX, semiotic, production, and cultural lenses.</p>
-          <p className="landing-desc">Upload any design image. Choose a lens. Get a sharp, evidence-grounded reading — not generic praise, not AI slop. Built for designers who think.</p>
-          <p className="landing-meta">5 free analyses • or add your OpenAI key for unlimited use</p>
-          <button type="button" className="landing-cta" onClick={() => setShowLanding(false)}>Start Now</button>
-          <button type="button" className="landing-key-link" onClick={() => { setShowLanding(false); setShowKeyPrompt(true); }}>I have my own key</button>
+        <div className="landing-hero">
+          <div className="landing-grid" />
+          <div className="landing-content">
+            <p className="landing-eyebrow">dotai presents</p>
+            <h1 className="landing-title">Design Dec<span className="landing-o">o</span>de</h1>
+            <p className="landing-sub">A critical image analysis tool that reads design through formal, UX, semiotic, production, and cultural lenses.</p>
+            <p className="landing-desc">Upload any design image. Choose up to 3 lenses. Get sharp, evidence-grounded readings — not generic praise, not AI slop. Built for designers who think.</p>
+            <p className="landing-meta">5 free analyses • or add your OpenAI key for unlimited use</p>
+            <button type="button" className="landing-cta" onClick={() => setShowLanding(false)}>Start Now</button>
+            <button type="button" className="landing-key-link" onClick={() => { setShowLanding(false); setShowKeyPrompt(true); }}>I have my own key</button>
+          </div>
         </div>
+
+        <section className="landing-about">
+          <div className="landing-section">
+            <h2>About the tool</h2>
+            <p>Design Decode reads images through five analytical lenses, each grounded in a distinct design discipline. It does not summarise, optimise, or praise — it reads, interprets, and critiques. The intelligence behind it is a carefully tuned language model persona: a design educator trained across visual culture, UX, semiotics, materiality, and critical theory. Every claim is grounded in visible evidence or marked as inference.</p>
+          </div>
+
+          <div className="landing-section">
+            <h2>Five lenses</h2>
+            <div className="lens-list">
+              <div className="lens-item"><strong>Visual Form</strong><span>Elements, principles, Gestalt, composition, visual traditions</span></div>
+              <div className="lens-item"><strong>User Flow</strong><span>Information architecture, navigation, affordance, cognitive load, accessibility</span></div>
+              <div className="lens-item"><strong>Symbol Logic</strong><span>Semiotics, denotation and connotation, cultural codes, visual rhetoric</span></div>
+              <div className="lens-item"><strong>Production Logic</strong><span>Materiality, medium, finish, sustainability, labour, lifecycle</span></div>
+              <div className="lens-item"><strong>Cultural Lens</strong><span>Class, caste, gender, race, sexuality, disability, region, power</span></div>
+            </div>
+          </div>
+
+          <div className="landing-section">
+            <h2>Two modes</h2>
+            <div className="mode-list">
+              <div className="mode-item"><strong>Standard</strong><span>A sharp-eyed design student. Direct, curious, under 200 words. Wears knowledge lightly.</span></div>
+              <div className="mode-item"><strong>Expert</strong><span>A senior educator. Forensic detail, design-history references, discussion questions. Under 300 words.</span></div>
+            </div>
+          </div>
+
+          <div className="landing-section">
+            <h2>How it works</h2>
+            <ol className="steps-list">
+              <li>Upload a design image — poster, interface, packaging, spatial composition</li>
+              <li>Choose up to 3 lenses — readings run in parallel</li>
+              <li>Select a mode — standard or expert voice</li>
+              <li>Run the decode — each lens returns a structured reading</li>
+              <li>Export your results as Markdown for your records</li>
+            </ol>
+          </div>
+        </section>
       </main>
     );
   }

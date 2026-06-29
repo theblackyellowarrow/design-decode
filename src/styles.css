@@ -19,12 +19,16 @@ button, input, textarea { font: inherit; }
 /* ── Landing ── */
 .landing {
   min-height: 100vh;
+  background: #000;
+  overflow-x: hidden;
+}
+.landing-hero {
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   overflow: hidden;
-  background: #000;
 }
 .landing-grid {
   position: absolute;
@@ -114,6 +118,66 @@ button, input, textarea { font: inherit; }
   text-underline-offset: 3px;
 }
 .landing-key-link:hover { color: var(--edge); }
+
+.landing-about {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+.landing-section {
+  margin-bottom: 48px;
+}
+.landing-section h2 {
+  color: var(--edge);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+.landing-section p {
+  color: var(--grey);
+  font-size: 0.92rem;
+  line-height: 1.65;
+  margin: 0;
+}
+.lens-list, .mode-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.lens-item, .mode-item {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--shadow);
+}
+.lens-item strong, .mode-item strong {
+  color: var(--cyan);
+  font-size: 0.85rem;
+  font-weight: 700;
+  min-width: 120px;
+}
+.lens-item span, .mode-item span {
+  color: var(--grey);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+.steps-list {
+  padding: 0 0 0 18px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.steps-list li {
+  color: var(--grey);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+.steps-list li::marker {
+  color: var(--cyan);
+  font-weight: 700;
+}
 
 /* ── Shell ── */
 .shell { max-width: 1180px; margin: 0 auto; padding: 40px 24px 80px; }
