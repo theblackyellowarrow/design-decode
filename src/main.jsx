@@ -256,24 +256,24 @@ function App() {
           <div className="landing-section" id="enterprise">
             <h2>Enterprise</h2>
             <p>Design Decode can be adapted for universities, museums, research groups, studios, publishers, and cultural organisations. Custom deployments can include discipline-specific reading frameworks, institutional terminology, archive workflows, curriculum integration, branded environments, and bespoke analytical lenses. If your organisation is interested in developing a customised version, we would be pleased to begin a conversation.</p>
-            <form className="enterprise-form" id="enterprise-form">
+            <form className="enterprise-form">
               <div className="form-row">
                 <input name="name" placeholder="Your name" required className="form-input" />
                 <input name="org" placeholder="Organisation" required className="form-input" />
               </div>
               <input name="email" type="email" placeholder="Email address" required className="form-input" />
               <textarea name="msg" placeholder="Tell us about your scale, use case, and customisation needs" required className="form-input" rows="3" />
-              <button type="button" className="landing-cta" style={{padding: '10px 32px', fontSize: '0.85rem'}} onClick={() => {
-                const form = document.getElementById('enterprise-form');
+              <button type="button" className="landing-cta" style={{padding: '10px 32px', fontSize: '0.85rem'}} onClick={(e) => {
+                const form = e.target.closest('form');
                 if (!form.checkValidity()) { form.reportValidity(); return; }
                 const fd = new FormData(form);
                 const name = fd.get('name') || '';
                 const org = fd.get('org') || '';
                 const email = fd.get('email') || '';
                 const msg = fd.get('msg') || '';
-                const subject = encodeURIComponent(`Design Decode Enterprise - ${org || name}`);
-                const body = encodeURIComponent(`Name: ${name}\nOrganisation: ${org}\nEmail: ${email}\n\n${msg}`);
-                window.location.href = `mailto:theblackyellowarrow@gmail.com?subject=${subject}&body=${body}`;
+                const subject = encodeURIComponent('Design Decode Enterprise - ' + (org || name));
+                const body = encodeURIComponent('Name: ' + name + '\nOrganisation: ' + org + '\nEmail: ' + email + '\n\n' + msg);
+                window.location.href = 'mailto:theblackyellowarrow@gmail.com?subject=' + subject + '&body=' + body;
               }}>Send request</button>
             </form>
           </div>
