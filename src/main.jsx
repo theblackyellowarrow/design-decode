@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { analysisMethods } from './lib/analysisMethods.js';
 import { compressImage } from './lib/imageCompression.js';
-import { exportSingleLens } from './lib/markdownExport.js';
+import { exportSingleLens, exportFullSession } from './lib/markdownExport.js';
 import './styles.css';
 
 function ResultText({ text }) {
@@ -22,7 +22,8 @@ function App() {
   const [image, setImage] = useState(null);
   const [context, setContext] = useState('');
   const [mode, setMode] = useState('standard');
-  const [selected, setSelected] = useState('visual_formal_composition');
+  const [selected, setSelected] = useState(['visual_formal_composition']);
+  const MAX_LENSES = 3;
   const [results, setResults] = useState({});
   const [status, setStatus] = useState({});
   const [questions, setQuestions] = useState({});
@@ -71,8 +72,12 @@ function App() {
     setStatus({});
   }
 
-  function selectMethod(key) {
-    setSelected(key);
+  function toggleMethod(key) {
+    setSelected((current) => {
+      if (current.includes(key)) return current.filter((k) => k !== key);
+      if (current.length >= MAX_LENSES) return current;
+      return [...current, key];
+    });
   }
 
   function clearAll() {
@@ -89,12 +94,16 @@ function App() {
     setQuestionsLoading({});
     setError('');
     if (fileInputRef.current) fileInputRef.current.value = '';
-    setSelected('visual_formal_composition');
+    setSelected(['visual_formal_composition']);
   }
 
   async function runAnalysis() {
     if (!image) {
       setError('Upload an image before running a decode.');
+      return;
+    }
+    if (!selected.length) {
+      setError('Select at least one decode lens.');
       return;
     }
     if (!userKey && usageCount >= 5) {
@@ -107,37 +116,42 @@ function App() {
     abortRef.current = controller;
     setError('');
     setResults({});
-    setStatus({ [selected]: 'loading' });
+    setQuestions({});
+    setQuestionsLoading({});
+    setStatus(Object.fromEntries(selected.map((key) => [key, 'loading'])));
 
-    try {
-      const response = await fetch('/api/analyse', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        signal: controller.signal,
-        body: JSON.stringify({ methodKey: selected, imageBase64: image.base64, mimeType: image.mimeType, context, mode, apiKey: userKey || undefined })
-      });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(payload.error || `Request failed with HTTP ${response.status}`);
-      setResults({ [selected]: payload.result });
-      setStatus({ [selected]: 'done' });
-      if (!userKey) {
-        const next = usageCount + 1;
-        setUsageCount(next);
-        localStorage.setItem('dd_usage', String(next));
+    await Promise.allSettled(selected.map(async (methodKey) => {
+      try {
+        const response = await fetch('/api/analyse', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          signal: controller.signal,
+          body: JSON.stringify({ methodKey, imageBase64: image.base64, mimeType: image.mimeType, context, mode, apiKey: userKey || undefined })
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(payload.error || `Request failed with HTTP ${response.status}`);
+        setResults((current) => ({ ...current, [methodKey]: payload.result }));
+        setStatus((current) => ({ ...current, [methodKey]: 'done' }));
+      } catch (err) {
+        if (err.name === 'AbortError') return;
+        setResults((current) => ({ ...current, [methodKey]: err.message || 'Analysis failed.' }));
+        setStatus((current) => ({ ...current, [methodKey]: 'error' }));
       }
-    } catch (err) {
-      if (err.name === 'AbortError') return;
-      setResults({ [selected]: err.message || 'Analysis failed.' });
-      setStatus({ [selected]: 'error' });
+    }));
+
+    if (!userKey) {
+      const next = Math.min(usageCount + 1, 99);
+      setUsageCount(next);
+      localStorage.setItem('dd_usage', String(next));
     }
   }
 
-  async function fetchCriticalQuestions() {
+  async function fetchCriticalQuestions(methodKey) {
     if (!userKey && usageCount >= 5) {
       setShowKeyPrompt(true);
       return;
     }
-    setQuestionsLoading({ [selected]: true });
+    setQuestionsLoading((c) => ({ ...c, [methodKey]: true }));
     try {
       const response = await fetch('/api/analyse', {
         method: 'POST',
@@ -146,11 +160,11 @@ function App() {
       });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(payload.error || 'Failed to load questions.');
-      setQuestions({ [selected]: payload.result });
+      setQuestions((c) => ({ ...c, [methodKey]: payload.result }));
     } catch {
-      setQuestions({ [selected]: 'Could not generate questions.' });
+      setQuestions((c) => ({ ...c, [methodKey]: 'Could not generate questions.' }));
     }
-    setQuestionsLoading({ [selected]: false });
+    setQuestionsLoading((c) => ({ ...c, [methodKey]: false }));
   }
 
   function saveKey() {
@@ -244,23 +258,28 @@ function App() {
           </div>
 
           <div className="method-grid" aria-label="Decode lenses">
-            {analysisMethods.map((method) => (
-              <label
-                key={method.key}
-                className={selected === method.key ? 'method selected' : 'method'}
-              >
-                <input
-                  type="radio"
-                  name="lens"
-                  value={method.key}
-                  checked={selected === method.key}
-                  onChange={() => selectMethod(method.key)}
-                  className="method-radio"
-                />
-                <span className="method-label">{method.name}</span>
-                {method.inferential ? <small> inference-heavy</small> : null}
-              </label>
-            ))}
+            <p className="lens-hint">Choose up to {MAX_LENSES} lenses</p>
+            {analysisMethods.map((method) => {
+              const isSelected = selected.includes(method.key);
+              const isMaxed = selected.length >= MAX_LENSES && !isSelected;
+              return (
+                <label
+                  key={method.key}
+                  className={isSelected ? 'method selected' : isMaxed ? 'method method-disabled' : 'method'}
+                >
+                  <input
+                    type="checkbox"
+                    value={method.key}
+                    checked={isSelected}
+                    disabled={isMaxed}
+                    onChange={() => toggleMethod(method.key)}
+                    className="method-checkbox"
+                  />
+                  <span className="method-label">{method.name}</span>
+                  {method.inferential ? <small> inference-heavy</small> : null}
+                </label>
+              );
+            })}
           </div>
 
           {error ? <p className="error">{error}</p> : null}
@@ -279,8 +298,14 @@ function App() {
       </section>
 
       <section className="results">
-        {(() => {
-          const key = selected;
+        {Object.values(status).some((s) => s === 'done') ? (
+          <div className="results-toolbar">
+            <button type="button" className="secondary" onClick={() => exportFullSession({
+              results, methods: analysisMethods, imageName: image?.name, context, selected
+            })}>Export session .md</button>
+          </div>
+        ) : null}
+        {selected.map((key) => {
           const method = analysisMethods.find((item) => item.key === key);
           const state = status[key];
           const text = results[key];
@@ -308,8 +333,8 @@ function App() {
                 <div className="questions-section">
                   {!questions[key] && !questionsLoading[key] ? (
                     <div className="questions-prompt">
-                      <span>Want to explore critical questions for this lens?</span>
-                      <button type="button" className="copy" onClick={fetchCriticalQuestions}>Ask</button>
+                      <span>Explore critical questions for this lens?</span>
+                      <button type="button" className="copy" onClick={() => fetchCriticalQuestions(key)}>Ask</button>
                     </div>
                   ) : null}
                   {questionsLoading[key] ? (
@@ -325,7 +350,7 @@ function App() {
               ) : null}
             </article>
           );
-        })()}
+        })}
       </section>
     </main>
   );
