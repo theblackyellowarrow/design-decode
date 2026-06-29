@@ -256,13 +256,12 @@ function App() {
           <div className="landing-section" id="enterprise">
             <h2>Enterprise</h2>
             <p>Design Decode can be adapted for universities, museums, research groups, studios, publishers, and cultural organisations. Custom deployments can include discipline-specific reading frameworks, institutional terminology, archive workflows, curriculum integration, branded environments, and bespoke analytical lenses. If your organisation is interested in developing a customised version, we would be pleased to begin a conversation.</p>
-            <iframe
-              src="https://docs.google.com/forms/d/e/1FAIpQLScMHx_XmBp3fIzSo2nwkan7-5U-p1DGfSC09gcs4Bwwln165Q/viewform?embedded=true"
-              className="enterprise-iframe"
-              title="Enterprise enquiry form"
-            >
-              Loading form...
-            </iframe>
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLScMHx_XmBp3fIzSo2nwkan7-5U-p1DGfSC09gcs4Bwwln165Q/viewform?usp=dialog"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="landing-cta enterprise-link"
+            >Open enterprise form</a>
           </div>
 
           <div className="landing-section" style={{textAlign: 'center', color: 'var(--grey)', fontSize: '0.78rem', paddingTop: '40px', borderTop: '1px solid var(--shadow)'}}>
