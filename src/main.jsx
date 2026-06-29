@@ -199,16 +199,27 @@ function App() {
             <p className="landing-eyebrow">dotai presents</p>
             <h1 className="landing-title">Design Dec<span className="landing-o">o</span>de</h1>
             <p className="landing-sub">A Critical Design Reading Environment</p>
-            <p className="landing-desc">Design is rarely read from a single point of view. Every poster, interface, publication, object, exhibition, package, or spatial intervention carries formal decisions, cultural assumptions, production histories, patterns of interaction, and systems of meaning. Design Decode brings these perspectives together.</p>
+            <p className="landing-desc">Design is rarely read from a single point of view. Every poster, interface, publication, object, exhibition, package, or spatial intervention carries formal decisions, cultural assumptions, production histories, patterns of interaction, and systems of meaning. Design Decode brings these perspectives together within a single environment for critical reading.</p>
+            <p className="landing-desc">Built for designers, educators, researchers, students, curators, studios, and cultural practitioners.</p>
             <p className="landing-meta"><span className="landing-meta-highlight">5 free analyses</span> or add your OpenAI key for unlimited use</p>
-            <button type="button" className="landing-cta" onClick={() => setShowLanding(false)}>Start Now</button>
+            <button type="button" className="landing-cta" onClick={() => setShowLanding(false)}>Begin a Reading</button>
             <button type="button" className="landing-key-link" onClick={() => { setShowLanding(false); setShowKeyPrompt(true); }}>I have my own key</button>
           </div>
         </div>
 
         <section className="landing-about" id="about">
           <div className="landing-section">
-            <h2>Read Through Five Lenses</h2>
+            <h2>Built Around Critique</h2>
+            <p>Design Decode grows from the culture of design studios, seminars, juries, and research rather than automated evaluation. It develops multiple readings of the same work instead of producing a single judgement. Every response separates what can be directly observed from what must be interpreted, and clearly indicates where conclusions extend into informed inference. Each reading can also generate a new set of critical questions, encouraging discussion, reflection, and further enquiry rather than closing interpretation. Design Decode is intended to support the practice of looking carefully.</p>
+          </div>
+
+          <div className="landing-section">
+            <h2>The Tool</h2>
+            <p>Upload a design image and select up to three analytical lenses. Readings are generated independently for each lens, allowing different disciplinary perspectives to exist alongside one another rather than collapsing into a single summary. Choose between Standard and Expert reading modes depending on the depth of analysis required. Every session can be exported as Markdown, preserving observations, interpretations, critical questions, and contextual notes for teaching, research, documentation, or collaborative review.</p>
+          </div>
+
+          <div className="landing-section">
+            <h2>Five Analytical Lenses</h2>
             <div className="lens-list">
               <div className="lens-item"><strong>Visual Form</strong><span>Composition, hierarchy, rhythm, typography, colour, Gestalt, proportion, and visual language.</span></div>
               <div className="lens-item"><strong>User Flow</strong><span>Navigation, affordance, information architecture, cognitive load, accessibility, and patterns of interaction.</span></div>
@@ -216,40 +227,30 @@ function App() {
               <div className="lens-item"><strong>Production Logic</strong><span>Materiality, manufacture, sustainability, labour, lifecycle, and the conditions through which objects come into being.</span></div>
               <div className="lens-item"><strong>Cultural Lens</strong><span>Identity, power, class, caste, gender, race, disability, sexuality, region, and the wider social structures reflected within design.</span></div>
             </div>
-            <p style={{marginTop: '12px'}}>Choose up to three lenses during a session and compare different readings of the same image.</p>
           </div>
 
           <div className="landing-section">
-            <h2>Two Reading Modes</h2>
+            <h2>Reading Modes</h2>
             <div className="mode-list">
-              <div className="mode-item"><strong>Standard</strong><span>Focused, concise readings suitable for everyday critique, studio discussions, and rapid reflection.</span></div>
-              <div className="mode-item"><strong>Expert</strong><span>Extended readings with broader theoretical context, historical references, and deeper critical discussion.</span></div>
+              <div className="mode-item"><strong>Standard</strong><span>Focused, concise readings for studio discussions, classroom critique, and everyday design practice.</span></div>
+              <div className="mode-item"><strong>Expert</strong><span>Extended readings with richer historical, theoretical, and disciplinary context for advanced teaching, research, and professional critique.</span></div>
             </div>
           </div>
 
           <div className="landing-section">
-            <h2>Built Around Critique</h2>
-            <p>Design Decode is shaped by the culture of design studios, seminars, and critical discussion. Rather than producing a single authoritative judgement, it develops multiple readings of the same work. It separates what can be directly observed from what must be interpreted and encourages further enquiry through follow-up critical questions generated for every completed reading. The result is less a report than an evolving conversation with the work itself.</p>
-          </div>
-
-          <div className="landing-section">
-            <h2>Export Your Sessions</h2>
-            <p>Individual readings and complete critique sessions can be exported as Markdown for teaching, research, documentation, publication, and collaborative review. Each exported session preserves both the observations and the questions that emerged during the reading.</p>
-          </div>
-
-          <div className="landing-section">
             <h2>About dotai</h2>
-            <p>dotai is an independent research and product practice exploring new ways of learning, designing, and working with computational systems. Its projects combine design education, critical research, publishing, archival practice, and software development to create tools that support careful thinking rather than automation alone. Every project begins with a discipline, a community, or a way of working, then grows into software shaped around that context. Design Decode is part of a growing collection of experimental tools for design education, creative practice, research, and cultural work.</p>
+            <p>dotai is an independent design research and product practice based in India. We build computational tools, publishing platforms, research environments, and learning systems for creative disciplines. Every project begins with a way of thinking before becoming a piece of software. Rather than treating technology as a destination, dotai explores how it can expand critical practice, design education, cultural research, and creative work. Design Decode is part of a growing collection of experimental tools that includes translation environments, research assistants, visual thinking systems, and studios for building with emerging technologies.</p>
             <div className="about-links">
               <a href="https://dotai.org/" target="_blank" rel="noopener noreferrer">Website</a>
               <a href="https://www.linkedin.com/company/dotaitechnodrome" target="_blank" rel="noopener noreferrer">LinkedIn</a>
               <a href="https://www.linkedin.com/in/theblackyellowarrow/" target="_blank" rel="noopener noreferrer">Founder</a>
             </div>
+            <p style={{marginTop: '12px'}}>Rahul Bhattacharya is a design educator, curator, writer, and researcher working across design pedagogy, critical theory, computational systems, and cultural practice. His work explores how technology can be shaped through disciplinary knowledge rather than generic automation.</p>
           </div>
 
           <div className="landing-section" id="enterprise">
             <h2>Enterprise</h2>
-            <p>Design Decode can be adapted for universities, museums, research groups, studios, cultural organisations, publishers, and businesses seeking discipline-specific methods of design reading. Custom deployments can include institutional terminology, additional analytical lenses, archive workflows, curriculum integration, branded environments, and bespoke research tools.</p>
+            <p>Design Decode can be adapted for universities, museums, research groups, studios, publishers, and cultural organisations. Custom deployments can include discipline-specific reading frameworks, institutional terminology, archive workflows, curriculum integration, branded environments, and bespoke analytical lenses. If your organisation is interested in developing a customised version, we would be pleased to begin a conversation.</p>
             <form className="enterprise-form" id="enterprise-form">
               <div className="form-row">
                 <input name="name" placeholder="Your name" required className="form-input" />
