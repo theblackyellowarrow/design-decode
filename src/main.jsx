@@ -190,7 +190,7 @@ function App() {
             <p className="landing-eyebrow">dotai presents</p>
             <h1 className="landing-title">Design Dec<span className="landing-o">o</span>de</h1>
             <p className="landing-sub">A critical image analysis tool that reads design through formal, UX, semiotic, production, and cultural lenses.</p>
-            <p className="landing-desc">Upload any design image. Choose up to 3 lenses. Get sharp, evidence-grounded readings — not generic praise, not AI slop. Built for designers who think.</p>
+            <p className="landing-desc">Upload any design image. Choose up to 3 lenses. Get sharp, evidence-grounded readings. Not generic praise, not AI slop. Built for designers who think.</p>
             <p className="landing-meta">5 free analyses • or add your OpenAI key for unlimited use</p>
             <button type="button" className="landing-cta" onClick={() => setShowLanding(false)}>Start Now</button>
             <button type="button" className="landing-key-link" onClick={() => { setShowLanding(false); setShowKeyPrompt(true); }}>I have my own key</button>
@@ -200,7 +200,7 @@ function App() {
         <section className="landing-about">
           <div className="landing-section">
             <h2>About the tool</h2>
-            <p>Design Decode reads images through five analytical lenses, each grounded in a distinct design discipline. It does not summarise, optimise, or praise — it reads, interprets, and critiques. The intelligence behind it is a carefully tuned language model persona: a design educator trained across visual culture, UX, semiotics, materiality, and critical theory. Every claim is grounded in visible evidence or marked as inference.</p>
+            <p>Design Decode reads images through five analytical lenses, each grounded in a distinct design discipline. It does not summarise, optimise, or praise. It reads, interprets, and critiques. The intelligence behind it is a carefully tuned language model persona: a design educator trained across visual culture, UX, semiotics, materiality, and critical theory. Every claim is grounded in visible evidence or marked as inference.</p>
           </div>
 
           <div className="landing-section">
@@ -225,10 +225,10 @@ function App() {
           <div className="landing-section">
             <h2>How it works</h2>
             <ol className="steps-list">
-              <li>Upload a design image — poster, interface, packaging, spatial composition</li>
-              <li>Choose up to 3 lenses — readings run in parallel</li>
-              <li>Select a mode — standard or expert voice</li>
-              <li>Run the decode — each lens returns a structured reading</li>
+              <li>Upload a design image. Poster, interface, packaging, spatial composition</li>
+              <li>Choose up to 3 lenses. Readings run in parallel</li>
+              <li>Select a mode. Standard or expert voice</li>
+              <li>Run the decode. Each lens returns a structured reading</li>
               <li>Export your results as Markdown for your records</li>
             </ol>
           </div>
