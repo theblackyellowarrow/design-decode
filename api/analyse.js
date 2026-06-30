@@ -155,6 +155,11 @@ export default async function handler(req, res) {
     return;
   }
 
+    const abortController = new AbortController();
+    const signal = abortController.signal;
+    const onAbort = () => { if (!signal.aborted) abortController.abort(); };
+    let removeListener = () => {};
+
   try {
     const body = await readJson(req);
     const { methodKey, imageBase64, mimeType = 'image/jpeg', context = '', mode = 'standard', apiKey } = body;
@@ -185,18 +190,20 @@ export default async function handler(req, res) {
       return;
     }
 
-    const abortController = new AbortController();
-    const onClose = () => abortController.abort();
     if (req.signal) {
-      req.signal.addEventListener('abort', onClose, { once: true });
+      req.signal.addEventListener('abort', onAbort, { once: true });
+      removeListener = () => req.signal.removeEventListener('abort', onAbort);
     } else {
-      req.on('close', onClose);
+      req.on('close', onAbort);
+      removeListener = () => req.removeListener('close', onAbort);
     }
 
-    const result = await callOpenAI({ methodKey, imageBase64, mimeType, context, mode: safeMode, apiKey, signal: abortController.signal });
+    const result = await callOpenAI({ methodKey, imageBase64, mimeType, context, mode: safeMode, apiKey, signal });
+    removeListener();
     res.statusCode = 200;
     res.end(JSON.stringify({ result }));
   } catch (error) {
+    removeListener();
     const status = Number(error.status) || 500;
     res.statusCode = status >= 400 && status < 600 ? status : 500;
     res.end(JSON.stringify({ error: error.message || 'Unexpected server error.' }));

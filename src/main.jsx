@@ -140,7 +140,8 @@ function App() {
         setResults((current) => ({ ...current, [methodKey]: payload.result }));
         setStatus((current) => ({ ...current, [methodKey]: 'done' }));
       } catch (err) {
-        if (err.name === 'AbortError') return;
+        if (err instanceof DOMException && err.name === 'AbortError') return;
+        if (typeof err === 'object' && err && err.name === 'AbortError') return;
         setResults((current) => ({ ...current, [methodKey]: err.message || 'Analysis failed.' }));
         setStatus((current) => ({ ...current, [methodKey]: 'error' }));
       }
